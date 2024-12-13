@@ -1,0 +1,25 @@
+---
+import ReunionButton from './ReunionButton.astro'
+import Typewriter from './Typewriter.astro'
+---
+<div class="hero-body">
+    <div class="container p-6">
+        <div class="columns is-vcentered">
+            <div class="column">
+                <h1 class="title is-0 is-size-1-mobile has-text-weight-bold">Impulsa tu Negocio de Estilismo Canino</h1>
+                <p class="subtitle is-4 has-text-grey"><Typewriter client:load /></p>
+                
+                <ReunionButton />
+            </div>
+            <div class="column is-hidden-mobile">
+                <figure class="image is-4by3">
+                    <img 
+                        src="/src/assets/images/dog-grooming.jpg" 
+                        alt="Dog grooming" 
+                        class="is-rounded transition-transform"
+                    />
+                </figure>
+            </div>
+        </div>
+    </div>
+</div>
