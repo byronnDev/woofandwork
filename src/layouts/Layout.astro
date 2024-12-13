@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="stylesheet" href="/src/assets/bulma/bulma.min.css">
+		ThemeButton		<link rel="stylesheet" href="/src/assets/bulma/bulma.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 		<title>Astro Basics</title>
 	</head>
@@ -27,13 +27,16 @@
 </style>
 
 <script type="module">
-	// Add a custom cursor to the page
-	const cursor = document.createElement('div');
-	cursor.style.cssText = 'width: 30px; height: 30px; border-radius: 50%; position: fixed; pointer-events: none; mix-blend-mode: difference; background: white; z-index: 9999;';
-	document.body.appendChild(cursor);
+	// Check if device is not mobile/tablet
+	if (window.matchMedia("(min-width: 1024px)").matches) {
+		// Add a custom cursor to the page
+		const cursor = document.createElement('div');
+		cursor.style.cssText = 'width: 30px; height: 30px; border-radius: 50%; position: fixed; pointer-events: none; mix-blend-mode: difference; background: white; z-index: 9999;';
+		document.body.appendChild(cursor);
 
-	document.addEventListener('mousemove', (e) => {
-		cursor.style.left = `${e.clientX - 10}px`;
-		cursor.style.top = `${e.clientY - 10}px`;
-	});
+		document.addEventListener('mousemove', (e) => {
+			cursor.style.left = `${e.clientX - 10}px`;
+			cursor.style.top = `${e.clientY - 10}px`;
+		});
+	}
 </script>
