@@ -1,0 +1,185 @@
+---
+const faqs = [
+    {
+        question: "¿Qué servicios ofrece Woof & Work Marketing?",
+        answer: "Ofrecemos una amplia gama de servicios de marketing digital, incluyendo Marketing Digital, Diseño Web, Consultoría, Contenido Visual y Gestión de Redes Sociales, todos enfocados en el sector veterinario y de negocios relacionados con animales."
+    },
+    {
+        question: "¿Cómo puedo empezar a trabajar con ustedes?",
+        answer: "Puedes comenzar contactándonos a través del formulario de contacto en nuestro sitio web o llamándonos directamente. Programaremos una reunión para entender tus necesidades y desarrollar una estrategia personalizada para tu negocio."
+    },
+    {
+        question: "¿Cuánto tiempo toma ver resultados?",
+        answer: "El tiempo para ver resultados puede variar según el servicio contratado y las metas específicas de tu negocio. Generalmente, nuestros clientes comienzan a notar mejoras significativas en un plazo de 3 a 6 meses."
+    },
+    {
+        question: "¿Ofrecen servicios personalizados?",
+        answer: "Sí, todos nuestros servicios son completamente personalizados para adaptarse a las necesidades y objetivos específicos de cada cliente, asegurando así la máxima efectividad en nuestras estrategias."
+    },
+    {
+        question: "¿Cuál es el costo de sus servicios?",
+        answer: "El costo de nuestros servicios varía según el alcance y la naturaleza del proyecto. Te invitamos a contactarnos para una cotización personalizada basada en tus requerimientos específicos."
+    },
+    {
+        question: "¿Trabajan con empresas fuera de España?",
+        answer: "Sí, trabajamos con clientes de todo el mundo. Nuestro equipo está preparado para adaptarse a diferentes zonas horarias y necesidades específicas de cada mercado."
+    },
+    {
+        question: "¿Ofrecen servicios de diseño web?",
+        answer: "Sí, ofrecemos servicios de diseño web profesionales y personalizados para clínicas veterinarias, tiendas de mascotas y negocios relacionados con animales. Nuestros sitios web son modernos, funcionales y optimizados para SEO."
+    },
+    {
+        question: "¿Qué métodos de pago aceptan?",
+        answer: "Aceptamos pagos en efectivo, transferencias bancarias y tarjetas de crédito. También ofrecemos opciones de financiamiento para proyectos de mayor envergadura."
+    },
+    {
+        question: "¿Ofrecen servicios de consultoría?",
+        answer: "Sí, ofrecemos servicios de consultoría estratégica para ayudarte a desarrollar y ejecutar planes de marketing efectivos para tu negocio. Nuestros consultores tienen una amplia experiencia en el sector animal."
+    },
+    {
+        question: "¿Cómo puedo medir el éxito de sus servicios?",
+        answer: "Medimos el éxito de nuestros servicios a través de métricas clave como tráfico web, generación de leads, engagement en redes sociales, entre otros. Además, te proporcionamos informes detallados para que puedas hacer un seguimiento de los resultados."
+    }
+];
+---
+<section id="faq" class="section">
+    <div class="container">
+        <h2 class="title is-2 has-text-centered mb-6">
+            <span class="has-text-primary">Preguntas</span>
+            <span class="ml-2">Frecuentes</span>
+        </h2>
+        
+        <div class="faq-container">
+            {faqs.slice(0, 5).map((faq) => (
+                <details class="mb-4">
+                    <summary class="faq-summary">
+                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold">{faq.question}</span>
+                    </summary>
+                    <div class="faq-content pt-4">
+                        <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
+                            {faq.answer}
+                        </p>
+                    </div>
+                </details>
+            ))}
+        </div>
+        
+        <div id="more-faqs" class="is-hidden faq-container">
+            {faqs.slice(5).map((faq) => (
+                <details class="mb-4">
+                    <summary class="faq-summary">
+                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold">{faq.question}</span>
+                    </summary>
+                    <div class="faq-content pt-4">
+                        <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
+                            {faq.answer}
+                        </p>
+                    </div>
+                </details>
+            ))}
+        </div>
+        
+        {faqs.length > 5 && (
+            <div class="has-text-centered mt-5">
+                <button
+                    id="show-more"
+                    class="button is-primary is-outlined is-medium"
+                    onclick="
+                        document.getElementById('more-faqs').classList.toggle('is-hidden');
+                        this.textContent = this.textContent === 'Ver más preguntas' ? 'Ver menos preguntas' : 'Ver más preguntas';
+                    "
+                >
+                    Ver más preguntas
+                </button>
+            </div>
+        )}
+    </div>
+</section>
+
+<style>
+    .faq-container details {
+        transition: all 0.3s ease;
+    }
+
+    .faq-summary {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 1rem;
+    }
+
+    .faq-summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-summary::after {
+        content: '▼';
+        font-size: 0.8em;
+        color: var(--primary);
+        transition: transform 0.3s ease;
+    }
+
+    details[open] .faq-summary::after {
+        transform: rotate(180deg);
+    }
+
+    .faq-content {
+        padding: 0 1rem 1rem 1rem;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+        .box {
+            background-color: var(--background);
+            color: var(--text);
+        }
+        
+        .faq-summary {
+            color: var(--text);
+        }
+
+        .has-text-grey {
+            color: var(--text-light) !important;
+        }
+    }
+
+    /* Mobile optimization */
+    @media screen and (max-width: 768px) {
+        .faq-summary {
+            padding: 0.75rem;
+        }
+
+        .faq-content {
+            padding: 0 0.75rem 0.75rem 0.75rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const showMoreBtn = document.getElementById('show-more');
+        if (showMoreBtn) {
+            showMoreBtn.addEventListener('click', () => {
+                const moreFaqs = document.getElementById('more-faqs');
+                if (moreFaqs) {
+                    moreFaqs.classList.toggle('is-hidden');
+                    showMoreBtn.textContent = showMoreBtn.textContent === 'Ver más preguntas' ? 'Ver menos preguntas' : 'Ver más preguntas';
+                }
+            });
+        }
+    });
+</script>
