@@ -112,12 +112,28 @@ const testimonios = [
 
     .slider-mask::before {
         left: 0;
-        background: linear-gradient(90deg, var(--bg-color, #ffffff) 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(90deg, 
+            var(--bg-gradient-start, #ffffff) 0%,
+            rgba(var(--bg-gradient-rgb, 255, 255, 255), 0) 100%);
     }
 
     .slider-mask::after {
         right: 0;
-        background: linear-gradient(270deg, var(--bg-color, #ffffff) 0%, rgba(255, 255, 255, 0) 100%);
+        background: linear-gradient(270deg, 
+            var(--bg-gradient-start, #ffffff) 0%,
+            rgba(var(--bg-gradient-rgb, 255, 255, 255), 0) 100%);
+    }
+
+    :root {
+        --bg-gradient-start: #ffffff;
+        --bg-gradient-rgb: 255, 255, 255;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg-gradient-start: #13151a;
+            --bg-gradient-rgb: 19, 21, 26;
+        }
     }
 
     @keyframes scroll {
