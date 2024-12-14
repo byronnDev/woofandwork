@@ -53,7 +53,7 @@ const faqs = [
             {faqs.slice(0, 5).map((faq) => (
                 <details class="mb-4">
                     <summary class="faq-summary">
-                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold">{faq.question}</span>
+                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold has-text-white">{faq.question}</span>
                     </summary>
                     <div class="faq-content pt-4">
                         <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
@@ -68,7 +68,7 @@ const faqs = [
             {faqs.slice(5).map((faq) => (
                 <details class="mb-4">
                     <summary class="faq-summary">
-                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold">{faq.question}</span>
+                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold has-text-white">{faq.question}</span>
                     </summary>
                     <div class="faq-content pt-4">
                         <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
@@ -84,10 +84,6 @@ const faqs = [
                 <button
                     id="show-more"
                     class="button is-primary is-outlined is-medium"
-                    onclick="
-                        document.getElementById('more-faqs').classList.toggle('is-hidden');
-                        this.textContent = this.textContent === 'Ver más preguntas' ? 'Ver menos preguntas' : 'Ver más preguntas';
-                    "
                 >
                     Ver más preguntas
                 </button>
@@ -172,13 +168,13 @@ const faqs = [
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const showMoreBtn = document.getElementById('show-more');
-        if (showMoreBtn) {
+        const moreFaqs = document.getElementById('more-faqs');
+        
+        if (showMoreBtn && moreFaqs) {
             showMoreBtn.addEventListener('click', () => {
-                const moreFaqs = document.getElementById('more-faqs');
-                if (moreFaqs) {
-                    moreFaqs.classList.toggle('is-hidden');
-                    showMoreBtn.textContent = showMoreBtn.textContent === 'Ver más preguntas' ? 'Ver menos preguntas' : 'Ver más preguntas';
-                }
+                moreFaqs.classList.toggle('is-hidden');
+                const isHidden = moreFaqs.classList.contains('is-hidden');
+                showMoreBtn.textContent = isHidden ? 'Ver más preguntas' : 'Ver menos preguntas';
             });
         }
     });
