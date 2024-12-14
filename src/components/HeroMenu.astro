@@ -1,43 +1,46 @@
 ---
 import ReunionButton from './ReunionButton.astro';
 ---
-<nav class="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-            <strong>Logo</strong>
-        </a>
+<div class="is-fluid is-marginless" style="width: 100vw; position: relative; left: 50%; transform: translateX(-50%); margin-left: 0; margin-right: 0;">
+    <nav class="navbar has-shadow is-spaced is-primary" role="navigation" aria-label="main navigation">
+        <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="/">
+                <strong>Logo</strong>
+            </a>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-
-    <div id="navMenu" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item has-text-weight-semibold" href="/">
-                Inicio
-            </a>
-            <a class="navbar-item has-text-weight-semibold" href="/servicios">
-                Servicios
-            </a>
-            <a class="navbar-item has-text-weight-semibold" href="/nosotros">
-                Nosotros
-            </a>
-            <a class="navbar-item has-text-weight-semibold" href="/contacto">
-                Contacto
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
         </div>
-        <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <ReunionButton />
+
+        <div id="navMenu" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item has-text-weight-semibold" href="/">
+                    Inicio
+                </a>
+                <a class="navbar-item has-text-weight-semibold" href="/servicios">
+                    Servicios
+                </a>
+                <a class="navbar-item has-text-weight-semibold" href="/nosotros">
+                    Nosotros
+                </a>
+                <a class="navbar-item has-text-weight-semibold" href="/contacto">
+                    Contacto
+                </a>
+            </div>
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <ReunionButton />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
