@@ -1,3 +1,7 @@
+---
+import Header from "../components/Header.astro";
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -10,18 +14,18 @@
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<Header />
 		<slot />
 	</body>
 </html>
 
-<style>
+<style is:global>
 	html,
 	body {
 		margin: 0 auto;
 		width: 100%;
 		max-width: 1200px;
 		height: 100%;
-		background-color: #fff;
 		font-family: 'Inter Tight', sans-serif;
 	}
 </style>
