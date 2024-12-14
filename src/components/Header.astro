@@ -1,7 +1,7 @@
 ---
 import ReunionButton from './ReunionButton.astro';
 ---
-<div class="is-fluid is-marginless" style="width: 100vw; position: relative; left: 50%; transform: translateX(-50%); margin-left: 0; margin-right: 0;">
+<div id="navBarMenu" class="is-fluid is-marginless">
     <nav class="navbar has-shadow is-spaced is-primary" role="navigation" aria-label="main navigation">
         <div class="container">
         <div class="navbar-brand">
@@ -18,26 +18,33 @@ import ReunionButton from './ReunionButton.astro';
 
         <div id="navMenu" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item has-text-weight-semibold" href="/">
-                    Inicio
-                </a>
-                <a class="navbar-item has-text-weight-semibold" href="/servicios">
-                    Servicios
-                </a>
-                <a class="navbar-item has-text-weight-semibold" href="/nosotros">
-                    Nosotros
-                </a>
-                <a class="navbar-item has-text-weight-semibold" href="/contacto">
-                    Contacto
-                </a>
+            <a class="navbar-item has-text-weight-semibold" href="/">
+                Inicio
+            </a>
+            <a class="navbar-item has-text-weight-semibold" href="/servicios">
+                Servicios
+            </a>
+            <a class="navbar-item has-text-weight-semibold" href="/nosotros">
+                Nosotros
+            </a>
+            <a class="navbar-item has-text-weight-semibold" href="/contacto">
+                Contacto
+            </a>
             </div>
             <div class="navbar-end">
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <ReunionButton />
-                    </div>
+            <div class="navbar-item">
+                <div class="buttons">
+                <ReunionButton />
                 </div>
             </div>
+            </div>
+        </div>
+
+    <style>
+        .navbar-burger span {
+        background-color: #ff9900; /* Orange color */
+        }
+    </style>
         </div>
     </nav>
 </div>
