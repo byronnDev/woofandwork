@@ -36,7 +36,7 @@ import Header from "../components/Header.astro";
 	}
 </style>
 
-<script type="module">
+<script is:inline type="module">
 	// Check if device is not mobile/tablet
 	if (window.matchMedia("(min-width: 1024px)").matches) {
 		// Add a custom cursor to the page
