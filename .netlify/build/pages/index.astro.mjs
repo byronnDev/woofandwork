@@ -14,7 +14,7 @@ var __defProp$1 = Object.defineProperty;
 var __template$1 = (cooked, raw) => __freeze$1(__defProp$1(cooked, "raw", { value: __freeze$1(cooked.slice()) }));
 var _a$1;
 const $$Typewriter = createComponent(($$result, $$props, $$slots) => {
-  return renderTemplate(_a$1 || (_a$1 = __template$1(["", `<span id="typewriter" data-astro-cid-tnzwls7f></span><span class="cursor" data-astro-cid-tnzwls7f>|</span> <script lang="module" type="module">
+  return renderTemplate(_a$1 || (_a$1 = __template$1(["", `<span id="typewriter" data-astro-cid-tnzwls7f></span><span class="cursor" data-astro-cid-tnzwls7f>|</span> <script lang="module">
   const phrases = [
     "Somos los mejores en SEO",
     "Expertos en Marketing Digital",
@@ -23,43 +23,47 @@ const $$Typewriter = createComponent(($$result, $$props, $$slots) => {
   ];
 
   document.addEventListener('DOMContentLoaded', () => {
-    const typewriter = document.getElementById('typewriter');
-    if (!typewriter) return;
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    const type = () => {
-      const currentPhrase = phrases[phraseIndex];
-      const displayedText = isDeleting
-        ? currentPhrase.substring(0, charIndex - 1)
-        : currentPhrase.substring(0, charIndex + 1);
-
-      typewriter.textContent = displayedText;
-
-      let delay = isDeleting ? 50 : 150;
-
-      if (!isDeleting && charIndex === currentPhrase.length) {
-        delay = 1000;
-        isDeleting = true;
-      } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        delay = 500;
-      }
-
-      isDeleting ? charIndex-- : charIndex++;
-
-      setTimeout(type, delay);
-    };
-
-    type();
+    try {
+      const typewriter = document.getElementById('typewriter');
+      if (!typewriter) return;
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+  
+      const type = () => {
+        const currentPhrase = phrases[phraseIndex];
+        const displayedText = isDeleting
+          ? currentPhrase.substring(0, charIndex - 1)
+          : currentPhrase.substring(0, charIndex + 1);
+  
+        typewriter.textContent = displayedText;
+  
+        let delay = isDeleting ? 50 : 150;
+  
+        if (!isDeleting && charIndex === currentPhrase.length) {
+          delay = 1000;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          delay = 500;
+        }
+  
+        isDeleting ? charIndex-- : charIndex++;
+  
+        setTimeout(type, delay);
+      };
+  
+      type();
+    } catch (error) {
+      console.error(error);
+    }
   });
 <\/script> `])), maybeRenderHead());
 }, "/home/mikel/code/repos/proyectoXabiWeb/src/components/Typewriter.astro", void 0);
 
 const $$HeroSection = createComponent(($$result, $$props, $$slots) => {
-  return renderTemplate`${maybeRenderHead()}<div class="hero-body" data-astro-cid-nlow4r3u> <div class="container p-6" data-astro-cid-nlow4r3u> <div class="columns is-vcentered" data-astro-cid-nlow4r3u> <div class="column" data-astro-cid-nlow4r3u> <h1 class="title is-0 is-size-1-mobile has-text-weight-bold" data-astro-cid-nlow4r3u>Impulsa tu Negocio de Estilismo Canino</h1> <p class="subtitle is-4 has-text-grey" data-astro-cid-nlow4r3u>${renderComponent($$result, "Typewriter", $$Typewriter, { "client:load": true, "client:component-hydration": "load", "client:component-path": "/home/mikel/code/repos/proyectoXabiWeb/src/components/Typewriter.astro", "client:component-export": "default", "data-astro-cid-nlow4r3u": true })}</p> ${renderComponent($$result, "ReunionButton", $$ReunionButton, { "data-astro-cid-nlow4r3u": true })} </div> <div class="column is-hidden-mobile animate-slide-in" data-astro-cid-nlow4r3u> <figure class="image is-4by3" data-astro-cid-nlow4r3u> <img src="/src/assets/images/dog-grooming.jpg" alt="Dog grooming" class="is-rounded transition-transform hover-effect" data-astro-cid-nlow4r3u> </figure> </div> </div> </div> </div> `;
+  return renderTemplate`${maybeRenderHead()}<div class="hero-body" data-astro-cid-nlow4r3u> <div class="container p-6" data-astro-cid-nlow4r3u> <div class="columns is-vcentered" data-astro-cid-nlow4r3u> <div class="column" data-astro-cid-nlow4r3u> <h1 class="title is-0 is-size-1-mobile has-text-weight-bold" data-astro-cid-nlow4r3u>Impulsa tu Negocio de Estilismo Canino</h1> <p class="subtitle is-4 has-text-grey" data-astro-cid-nlow4r3u> ${renderComponent($$result, "Typewriter", $$Typewriter, { "data-astro-cid-nlow4r3u": true })} </p> ${renderComponent($$result, "ReunionButton", $$ReunionButton, { "data-astro-cid-nlow4r3u": true })} </div> <div class="column is-hidden-mobile animate-slide-in" data-astro-cid-nlow4r3u> <figure class="image is-4by3" data-astro-cid-nlow4r3u> <img src="/src/assets/images/dog-grooming.jpg" alt="Dog grooming" class="is-rounded transition-transform hover-effect" data-astro-cid-nlow4r3u> </figure> </div> </div> </div> </div> `;
 }, "/home/mikel/code/repos/proyectoXabiWeb/src/components/HeroSection.astro", void 0);
 
 const $$Header = createComponent(($$result, $$props, $$slots) => {

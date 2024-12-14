@@ -6,4 +6,14 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   output: 'server',
   adapter: netlify(),
+  vite: {
+    plugins: [
+      {
+        name: 'ignore-tsconfig',
+        load(id) {
+          if (id.includes('tsconfig.json')) return ''; // Ignora el archivo
+        },
+      },
+    ],
+  },  
 });
