@@ -51,31 +51,31 @@ const faqs = [
         
         <div class="faq-container">
             {faqs.slice(0, 5).map((faq) => (
-                <details class="mb-4">
-                    <summary class="faq-summary">
-                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold has-text-white">{faq.question}</span>
-                    </summary>
-                    <div class="faq-content pt-4">
-                        <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
-                            {faq.answer}
-                        </p>
-                    </div>
-                </details>
+            <details class="mb-4">
+                <summary class="faq-summary">
+                <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold">{faq.question}</span>
+                </summary>
+                <div class="faq-content pt-4">
+                <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
+                    {faq.answer}
+                </p>
+                </div>
+            </details>
             ))}
         </div>
         
         <div id="more-faqs" class="is-hidden faq-container">
             {faqs.slice(5).map((faq) => (
-                <details class="mb-4">
-                    <summary class="faq-summary">
-                        <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold has-text-white">{faq.question}</span>
-                    </summary>
-                    <div class="faq-content pt-4">
-                        <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
-                            {faq.answer}
-                        </p>
-                    </div>
-                </details>
+            <details class="mb-4">
+                <summary class="faq-summary">
+                <span class="is-size-5-desktop is-size-6-mobile has-text-weight-bold">{faq.question}</span>
+                </summary>
+                <div class="faq-content pt-4">
+                <p class="is-size-5-desktop is-size-6-mobile has-text-grey">
+                    {faq.answer}
+                </p>
+                </div>
+            </details>
             ))}
         </div>
         
