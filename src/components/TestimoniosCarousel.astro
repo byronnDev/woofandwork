@@ -1,0 +1,131 @@
+---
+import TestimonioItem from './TestimonioItem.astro';
+
+const testimonios = [
+    {
+        nombre: 'Clínica Veterinaria PetCare',
+        comentario: 'Gracias a su estrategia de marketing digital, hemos aumentado nuestras consultas en un 40%. El contenido que crean sobre cuidado animal es excepcional.'
+    },
+    {
+        nombre: 'Peluquería Canina Happy Dogs',
+        comentario: 'La gestión de nuestras redes sociales ha sido transformadora. Nuestros clientes valoran mucho el contenido educativo sobre el cuidado del pelaje.'
+    },
+    {
+        nombre: 'Tienda de Mascotas PawParadise',
+        comentario: 'Las campañas de email marketing han sido clave para fidelizar a nuestros clientes. Nuestras ventas online se han duplicado.'
+    },
+    {
+        nombre: 'Centro de Adiestramiento K9',
+        comentario: 'El posicionamiento SEO nos ha ayudado a llegar a más dueños de mascotas. Su comprensión del sector animal es invaluable.'
+    },
+    {
+        nombre: 'Hospital Veterinario San Martín',
+        comentario: 'Su experiencia en marketing veterinario nos ha permitido destacar en un mercado muy competitivo. Los resultados han superado nuestras expectativas.'
+    },
+    {
+        nombre: 'Pet Shop Huellitas',
+        comentario: 'Desde que implementamos su estrategia de marketing digital, hemos visto un incremento significativo en clientes nuevos y mejores reseñas online.'
+    },
+    {
+        nombre: 'Centro Veterinario Norte',
+        comentario: 'La campaña de redes sociales que diseñaron capturó perfectamente la esencia de nuestro servicio. Estamos muy satisfechos con los resultados.'
+    },
+    {
+        nombre: 'Spa Canino Luxury Pets',
+        comentario: 'Su enfoque en marketing de contenidos nos ha ayudado a educar a nuestros clientes sobre la importancia del bienestar animal.'
+    },
+    {
+        nombre: 'Clínica Felina MiauSalud',
+        comentario: 'Las estrategias de marketing específicas para gatos nos han permitido llegar a un nicho muy específico. Excelente trabajo.'
+    },
+    {
+        nombre: 'Pet Hotel Lucky',
+        comentario: 'Gracias a su gestión de marketing, nuestra ocupación ha aumentado un 60%. Su conocimiento del sector mascotas es impresionante.'
+    }
+];
+---
+
+<div class="container">
+    <div class="slider-mask">
+        <div class="slider-track">
+            {testimonios.map(testimonio => (
+                <div class="slider-item">
+                    <TestimonioItem nombre={testimonio.nombre} comentario={testimonio.comentario} />
+                </div>
+            ))}
+            {testimonios.map(testimonio => (
+                <div class="slider-item">
+                    <TestimonioItem nombre={testimonio.nombre} comentario={testimonio.comentario} />
+                </div>
+            ))}
+        </div>
+    </div>
+</div>
+
+<style>
+    .slider-mask {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding: 2rem 0;
+    }
+    
+    .slider {
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 0;
+    }
+
+    .slider-track {
+        display: flex;
+        animation: scroll 20s linear infinite;
+        position: relative;
+    }
+
+    .slider-item {
+        flex: 0 0 100%; /* Por defecto en móvil muestra 1 */
+        padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .slider-item {
+            flex: 0 0 50%; /* En tablets muestra 2 */
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .slider-item {
+            flex: 0 0 33.333%; /* En PC muestra 3 */
+        }
+    }
+
+    .slider-mask::before,
+    .slider-mask::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        z-index: 10;
+        width: 15%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .slider-mask::before {
+        left: 0;
+        background: linear-gradient(90deg, var(--bg-color, #ffffff) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    .slider-mask::after {
+        right: 0;
+        background: linear-gradient(270deg, var(--bg-color, #ffffff) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    @keyframes scroll {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+</style>
