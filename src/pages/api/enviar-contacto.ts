@@ -27,6 +27,10 @@ export const POST: APIRoute = async ({ request }) => {
     try {
         const data = await request.json() as ContactFormData;
         const { nombre, email, empresa, telefono, tipo, mensaje } = data;
+        // Fetch random dog image
+        const response = await fetch('https://dog.ceo/api/breeds/image/random');
+        const dogData = await response.json();
+        const foto = dogData.message;
 
         // Enviar email usando Resend
         await resend.emails.send({
@@ -37,20 +41,20 @@ export const POST: APIRoute = async ({ request }) => {
             <!DOCTYPE html>
             <html lang="es">
             <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
-                <div style="text-align: center; margin-bottom: 30px;">
-                <h1 style="color: #2c3e50; font-size: 24px; margin-bottom: 20px;">✨ Nuevo Mensaje de Contacto ✨</h1>
-                <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?w=300" 
-                     alt="Perrito feliz" 
-                     style="border-radius: 10px; max-width: 300px; margin: 20px 0;">
-                </div>
-                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
-                <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Nombre:</span> ${nombre}</p>
-                <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Email:</span> ${email}</p>
-                <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Empresa:</span> ${empresa}</p>
-                <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Teléfono:</span> ${telefono}</p>
-                <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Tipo:</span> ${tipo}</p>
-                <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Mensaje:</span> ${mensaje}</p>
-                </div>
+            <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #2c3e50; font-size: 24px; margin-bottom: 20px;">✨ Nuevo Mensaje de Contacto ✨</h1>
+            <img src="${foto}"
+                 alt="Perrito feliz" 
+                 style="border-radius: 10px; max-width: 300px; margin: 20px 0;">
+            </div>
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px;">
+            <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Nombre:</span> ${nombre}</p>
+            <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Email:</span> ${email}</p>
+            <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Empresa:</span> ${empresa}</p>
+            <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Teléfono:</span> ${telefono}</p>
+            <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Tipo:</span> ${tipo}</p>
+            <p style="margin: 10px 0;"><span style="color: #2c3e50; font-weight: bold;">Mensaje:</span> ${mensaje}</p>
+            </div>
             </body>
             </html>
             `

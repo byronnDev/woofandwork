@@ -60,7 +60,7 @@
                     <div class="field">
                         <label class="label">Mensaje *</label>
                         <div class="control">
-                            <textarea class="textarea" id="mensaje" name="mensaje" rows="4" required></textarea>
+                            <textarea class="textarea" id="mensaje" name="mensaje" rows="4" required style="resize: none; overflow: hidden;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
                         </div>
                     </div>
 
@@ -80,6 +80,16 @@
 <script>
     const form = document.querySelector('form');
     const mensajeRespuesta = document.getElementById('mensaje-respuesta');
+
+    // VALIDACIÓN DEL FORMULARIO
+    const telefono = document.getElementById('telefono') as HTMLInputElement;
+    telefono.addEventListener('input', () => {
+        if (telefono.value.length > 0 && !/^\d{9}$/.test(telefono.value)) {
+            telefono.setCustomValidity('El teléfono debe tener 9 dígitos');
+        } else {
+            telefono.setCustomValidity('');
+        }
+    });
 
     form?.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -113,3 +123,27 @@
         mensajeRespuesta!.classList.remove('is-hidden');
     });
 </script>
+
+<style>
+    /* Estilos para el select cuando está enfocado */
+    .select select:focus {
+        border-color: #ff8c00;
+        box-shadow: 0 0 0 0.125em rgba(255, 140, 0, 0.25);
+    }
+
+    /* Estilos para el select cuando está desplegado */
+    .select:not(.is-multiple):not(.is-loading)::after {
+        border-color: #ff8c00 !important;
+    }
+
+    /* Color del borde cuando el select está hover */
+    .select select:hover {
+        border-color: #ff8c00;
+    }
+
+    /* Cambiar el color de los inputs cuando están enfocados */
+    .input:focus, .textarea:focus {
+        border-color: #ff8c00;
+        box-shadow: 0 0 0 0.125em rgba(255, 140, 0, 0.25);
+    }
+</style>`;
