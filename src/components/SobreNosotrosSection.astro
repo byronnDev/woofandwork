@@ -30,7 +30,7 @@
             </div>
             
             <div class="column is-hidden-mobile animate-slide-in">
-                <figure class="image">
+                <figure class="image hover-effect">
                     <img 
                         src="/src/assets/images/social-media-metrics.jpg" 
                         alt="Sobre nosotros" 
@@ -58,4 +58,13 @@
             opacity: 1;
         }
     }
+
+    .hover-effect {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-effect:hover {
+        transform: translateY(-10px);
+    }
+
 </style>

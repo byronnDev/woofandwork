@@ -16,7 +16,7 @@ import Typewriter from './Typewriter.astro'
                     <img 
                         src="/src/assets/images/dog-grooming.jpg" 
                         alt="Dog grooming" 
-                        class="is-rounded transition-transform"
+                        class="is-rounded transition-transform hover-effect"
                     />
                 </figure>
             </div>
@@ -40,5 +40,13 @@ import Typewriter from './Typewriter.astro'
             transform: translateX(0);
             opacity: 1;
         }
+    }
+
+    .hover-effect {
+        transition: transform 0.3s ease;
+    }
+
+    .hover-effect:hover {
+        transform: scale(1.05);
     }
 </style>
