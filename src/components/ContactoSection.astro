@@ -1,0 +1,115 @@
+---
+---
+<section class="section">
+    <div class="container">
+        <h2 class="title is-2 has-text-centered">Contáctanos</h2>
+        <p class="subtitle is-5 has-text-centered has-text-grey mb-6">¿Quieres impulsar tu negocio en el sector de mascotas? Déjanos tus datos y nos pondremos en contacto contigo.</p>
+        
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <form class="box" action="/api/enviar-contacto" method="POST">
+                    <div class="field">
+                        <label class="label">Nombre completo *</label>
+                        <div class="control">
+                            <input class="input" type="text" id="nombre" name="nombre" required>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Nombre de la empresa</label>
+                        <div class="control">
+                            <input class="input" type="text" id="empresa" name="empresa">
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Email *</label>
+                                <div class="control">
+                                    <input class="input" type="email" id="email" name="email" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="column">
+                            <div class="field">
+                                <label class="label">Teléfono</label>
+                                <div class="control">
+                                    <input class="input" type="tel" id="telefono" name="telefono">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo de negocio *</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select id="tipo" name="tipo" required>
+                                    <option value="">Selecciona una opción</option>
+                                    <option value="veterinaria">Veterinaria</option>
+                                    <option value="tienda">Tienda de mascotas</option>
+                                    <option value="peluqueria">Peluquería canina</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Mensaje *</label>
+                        <div class="control">
+                            <textarea class="textarea" id="mensaje" name="mensaje" rows="4" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button type="submit" class="button is-primary is-fullwidth">Enviar mensaje</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="mensaje-respuesta" class="notification is-hidden mt-4"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const form = document.querySelector('form');
+    const mensajeRespuesta = document.getElementById('mensaje-respuesta');
+
+    form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        try {
+            const formData = new FormData(e.target as HTMLFormElement);
+            const formJson = Object.fromEntries(formData);
+
+            const response = await fetch('/api/enviar-contacto', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formJson)
+            });
+
+            const data = await response.json();
+            
+            if (data.success) {
+                mensajeRespuesta!.textContent = data.message;
+                mensajeRespuesta!.className = 'notification is-success mt-4';
+                (e.target as HTMLFormElement).reset();
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            mensajeRespuesta!.textContent = 'Error al enviar el mensaje. Por favor, intenta nuevamente.';
+            mensajeRespuesta!.className = 'notification is-danger mt-4';
+        }
+
+        mensajeRespuesta!.classList.remove('is-hidden');
+    });
+</script>
