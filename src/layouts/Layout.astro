@@ -1,23 +1,55 @@
 ---
 import Header from "../components/Header.astro";
 import FixedButtons from "../components/FixedButtons.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="stylesheet" href="/bulma/bulma.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-		<title>Astro Basics</title>
+		<title>Woof & Work Marketing | Marketing Digital para Empresas</title>
+		<meta name="description" content="Agencia de marketing digital especializada en estrategias personalizadas para empresas. Mejora tu presencia online con nuestros servicios de marketing." />
+		<meta name="keywords" content="marketing digital, estrategia marketing, publicidad online, SEO, redes sociales, marketing empresas" />
+		<meta property="og:title" content="Woof & Work Marketing | Marketing Digital para Empresas" />
+		<meta property="og:description" content="Agencia de marketing digital especializada en estrategias personalizadas para empresas." />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://www.tusitio.com/" />
+		<meta property="og:image" content="https://www.tusitio.com/images/og-image.jpg" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Woof & Work Marketing | Marketing Digital para Empresas" />
+		<meta name="twitter:description" content="Agencia de marketing digital especializada en estrategias personalizadas para empresas." />
+		<meta name="twitter:image" content="https://www.tusitio.com/images/twitter-image.jpg" />
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Organization",
+				"name": "Woof & Work Marketing",
+				"url": "https://www.tusitio.com/",
+				"logo": "https://www.tusitio.com/images/logo.png",
+				"sameAs": [
+					"https://www.facebook.com/tuempresa",
+					"https://www.twitter.com/tuempresa",
+					"https://www.instagram.com/tuempresa"
+				],
+				"contactPoint": {
+					"@type": "ContactPoint",
+					"telephone": "+34-123-456-789",
+					"contactType": "Customer Service"
+				}
+			}
+		</script>
 	</head>
 	<body>
 		<Header />
 		<slot />
 		<FixedButtons />
+		<Footer />
 	</body>
 </html>
 
