@@ -15,11 +15,25 @@ import Typewriter from './Typewriter.astro'
             </div>
             <div class="column is-hidden-mobile animate-slide-in">
                 <figure class="image is-4by3">
-                    <img 
-                        src="/images/dog-grooming.jpg" 
-                        alt="Dog grooming" 
-                        class="is-rounded transition-transform hover-effect"
-                    />
+                    <picture>
+                        <source
+                            srcset="/images/dog-grooming.avif"
+                            type="image/avif"
+                        />
+                        <source
+                            srcset="/images/dog-grooming.webp"
+                            type="image/webp"
+                        />
+                        <img 
+                            src="/images/dog-grooming.webp"
+                            alt="Servicio profesional de aseo y peluquería canina - Woof & Work Marketing"
+                            width="800"
+                            height="600"
+                            loading="eager"
+                            decoding="async"
+                            class="is-rounded transition-transform hover-effect"
+                        />
+                    </picture>
                 </figure>
             </div>
         </div>

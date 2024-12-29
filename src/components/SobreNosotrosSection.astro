@@ -34,12 +34,24 @@
                 </div>
             
             <div class="column is-hidden-mobile animate-slide-in">
-                <figure class="image hover-effect">
-                    <img 
-                        src="/images/social-media-metrics.jpg" 
-                        alt="Sobre nosotros" 
+                <picture class="hover-effect">
+                    <source
+                        srcset="/images/social-media-metrics.avif"
+                        type="image/avif"
                     />
-                </figure>
+                    <source
+                        srcset="/images/social-media-metrics.webp"
+                        type="image/webp"
+                    />
+                    <img 
+                        src="/images/social-media-metrics.webp"
+                        alt="Sobre nosotros"
+                        width="800"
+                        height="600"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                </picture>
             </div>
         </div>
     </div>
