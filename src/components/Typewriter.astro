@@ -14,39 +14,64 @@
     "🌐 Alcance Global"
   ];
 
+  let typeInterval;
+  let phraseIndex = Math.floor(Math.random() * phrases.length);
+  let charIndex = 0;
+  let isDeleting = false;
+
+  const typePhrase = () => {
+    const currentPhrase = phrases[phraseIndex];
+    const displayedText = isDeleting
+      ? currentPhrase.substring(0, charIndex - 1)
+      : currentPhrase.substring(0, charIndex + 1);
+
+    typewriter.textContent = displayedText;
+
+    let delay = isDeleting ? 50 : 150;
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+      delay = 1000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      delay = 500;
+    }
+
+    isDeleting ? charIndex-- : charIndex++;
+    typeInterval = setTimeout(typePhrase, delay);
+  };
+
+  const startTyping = () => {
+    if (typeInterval) return;
+    typePhrase();
+  };
+
+  const stopTyping = () => {
+    clearTimeout(typeInterval);
+    typeInterval = null;
+  };
+
+  const initializeObserver = (typewriterElement) => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          startTyping();
+        } else {
+          stopTyping();
+        }
+      });
+    });
+
+    observer.observe(typewriterElement);
+  };
+
   document.addEventListener('DOMContentLoaded', () => {
     try {
       const typewriter = document.getElementById('typewriter');
       if (!typewriter) return;
-      let phraseIndex = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-  
-      const type = () => {
-        const currentPhrase = phrases[phraseIndex];
-        const displayedText = isDeleting
-          ? currentPhrase.substring(0, charIndex - 1)
-          : currentPhrase.substring(0, charIndex + 1);
-  
-        typewriter.textContent = displayedText;
-  
-        let delay = isDeleting ? 50 : 150;
-  
-        if (!isDeleting && charIndex === currentPhrase.length) {
-          delay = 1000;
-          isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-          isDeleting = false;
-          phraseIndex = (phraseIndex + 1) % phrases.length;
-          delay = 500;
-        }
-  
-        isDeleting ? charIndex-- : charIndex++;
-  
-        setTimeout(type, delay);
-      };
-  
-      type();
+
+      initializeObserver(typewriter);
     } catch (error) {
       console.error(error);
     }
