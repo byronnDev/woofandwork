@@ -7,46 +7,46 @@
         
         <div class="columns is-centered">
             <div class="column is-8">
-                <form class="box" action="/api/enviar-contacto" method="POST">
+                <form class="box" action="/api/enviar-contacto" method="POST" aria-label="Formulario de contacto">
                     <div class="field">
-                        <label class="label">Nombre completo *</label>
+                        <label class="label" for="nombre">Nombre completo *</label>
                         <div class="control">
-                            <input class="input" type="text" id="nombre" name="nombre" required>
+                            <input class="input" type="text" id="nombre" name="nombre" required aria-required="true" aria-label="Nombre completo">
                         </div>
                     </div>
                     
                     <div class="field">
-                        <label class="label">Nombre de la empresa</label>
+                        <label class="label" for="empresa">Nombre de la empresa</label>
                         <div class="control">
-                            <input class="input" type="text" id="empresa" name="empresa">
+                            <input class="input" type="text" id="empresa" name="empresa" aria-label="Nombre de la empresa">
                         </div>
                     </div>
 
                     <div class="columns">
                         <div class="column">
                             <div class="field">
-                                <label class="label">Email *</label>
+                                <label class="label" for="email">Email *</label>
                                 <div class="control">
-                                    <input class="input" type="email" id="email" name="email" required>
+                                    <input class="input" type="email" id="email" name="email" required aria-required="true" aria-label="Correo electrónico">
                                 </div>
                             </div>
                         </div>
                         
                         <div class="column">
                             <div class="field">
-                                <label class="label">Teléfono</label>
+                                <label class="label" for="telefono">Teléfono</label>
                                 <div class="control">
-                                    <input class="input" type="tel" id="telefono" name="telefono">
+                                    <input class="input" type="tel" id="telefono" name="telefono" aria-label="Número de teléfono">
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="field">
-                        <label class="label">Tipo de negocio *</label>
+                        <label class="label" for="tipo">Tipo de negocio *</label>
                         <div class="control">
                             <div class="select is-fullwidth">
-                                <select id="tipo" name="tipo" required>
+                                <select id="tipo" name="tipo" required aria-required="true" aria-label="Tipo de negocio">
                                     <option value="">Selecciona una opción</option>
                                     <option value="veterinaria">Veterinaria</option>
                                     <option value="tienda">Tienda de mascotas</option>
@@ -58,9 +58,9 @@
                     </div>
 
                     <div class="field">
-                        <label class="label">Mensaje *</label>
+                        <label class="label" for="mensaje">Mensaje *</label>
                         <div class="control">
-                            <textarea class="textarea" id="mensaje" name="mensaje" rows="4" required style="resize: none; overflow: hidden;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                            <textarea class="textarea" id="mensaje" name="mensaje" rows="4" required aria-required="true" aria-label="Mensaje" style="resize: none; overflow: hidden;" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
                         </div>
                     </div>
 
@@ -71,7 +71,7 @@
                     </div>
                 </form>
 
-                <div id="mensaje-respuesta" class="notification is-hidden mt-4"></div>
+                <div id="mensaje-respuesta" class="notification is-hidden mt-4" role="alert"></div>
             </div>
         </div>
     </div>
@@ -123,7 +123,6 @@
         mensajeRespuesta!.classList.remove('is-hidden');
     });
 </script>
-
 <style>
     /* Estilos para el select cuando está enfocado */
     .select select:focus {
@@ -146,4 +145,4 @@
         border-color: #ff8c00;
         box-shadow: 0 0 0 0.125em rgba(255, 140, 0, 0.25);
     }
-</style>`;
+</style>
