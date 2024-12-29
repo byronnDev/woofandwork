@@ -1,6 +1,6 @@
 ---
 ---
-<footer class="footer py-6" style="margin-top: auto;">
+<footer class="footer">
     <div class="container">
         <div class="columns is-multiline">
             {/* Company Info */}
@@ -13,46 +13,24 @@
 
             {/* Quick Links */}
             <div class="column is-12-mobile is-3-desktop">
-                <h4 class="title is-5">Enlaces Rápidos</h4>
-                <ul>
-                    <li><a href="/" class="has-text-white hover:has-text-warning">Inicio</a></li>
-                    <li><a href="/#services" class="has-text-white hover:has-text-warning">Servicios</a></li>
-                    <li><a href="/#about" class="has-text-white hover:has-text-warning">Sobre Nosotros</a></li>
-                    <li><a href="/blog" class="has-text-white hover:has-text-warning">Blog</a></li>
-                    <li><a href="/#contact" class="has-text-white hover:has-text-warning">Contacto</a></li>
-                    <li><a href="/#faq" class="has-text-white hover:has-text-warning">FAQ</a></li>
+                <h4 class="title is-5 dark:text-gray-200">Enlaces Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a href="/" class="text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors">Inicio</a></li>
+                    <li><a href="/#services" class="text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors">Servicios</a></li>
+                    <li><a href="/#about" class="text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors">Sobre Nosotros</a></li>
+                    <li><a href="/blog" class="text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors">Blog</a></li>
+                    <li><a href="/#contact" class="text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors">Contacto</a></li>
+                    <li><a href="/#faq" class="text-gray-700 hover:text-amber-500 dark:text-gray-300 dark:hover:text-amber-400 transition-colors">FAQ</a></li>
                 </ul>
             </div>
 
-            {/* Social Media */}
-            <div class="column is-12-mobile is-3-desktop">
-                <h4 class="title is-5">Síguenos</h4>
-                <div class="buttons">
-                    <a href="https://facebook.com" class="button is-light">
-                        <span class="icon">
-                            <i class="fab fa-facebook"></i>
-                        </span>
-                    </a>
-                    <a href="https://twitter.com" class="button is-light">
-                        <span class="icon">
-                            <i class="fab fa-twitter"></i>
-                        </span>
-                    </a>
-                    <a href="https://instagram.com" class="button is-light">
-                        <span class="icon">
-                            <i class="fab fa-instagram"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-
             {/* Mapa */}
-            <div class="column is-12-mobile is-3-desktop">
+            <div class="column is-12-mobile is-4-desktop">
                 <div class="map-container">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.123456789!2d-1.656234!3d42.812525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4c61ef12345678%3A0xabcdef1234567890!2sPamplona%2C%20Navarra%2C%20España!5e0!3m2!1ses!2sus!4v1680000000000!5m2!1ses!2sus"
                         width="100%"
-                        height="150"
+                        height="200"
                         style="border:0;"
                         allowfullscreen=""
                         loading="lazy"
@@ -69,3 +47,91 @@
         </div>
     </div>
 </footer>
+
+<footer class="footer">
+	<div class="content has-text-centered">
+		<p>
+			<strong>Woof & Work Marketing</strong> por <a href="https://www.mikeldev.com">Xabier Echeverria</a>. Todos los derechos reservados.
+		</p>
+		<div class="social-icons">
+			<a href="https://www.facebook.com/tuempresa" aria-label="Facebook">
+				<i class="fab fa-facebook-f"></i>
+			</a>
+			<a href="https://www.twitter.com/tuempresa" aria-label="Twitter">
+				<i class="fab fa-twitter"></i>
+			</a>
+			<a href="https://www.instagram.com/tuempresa" aria-label="Instagram">
+				<i class="fab fa-instagram"></i>
+			</a>
+			<a href="https://www.linkedin.com/company/tuempresa" aria-label="LinkedIn">
+				<i class="fab fa-linkedin-in"></i>
+			</a>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		background-color: #f5f5f5;
+		padding: 2rem 1.5rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.columns {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+
+	.column {
+		text-align: center;
+	}
+
+	.social-icons {
+		display: flex;
+		justify-content: center;
+		color: #ff9900;
+		font-size: 1.25rem;
+        margin-top: 1rem;
+        gap: 1rem;
+	}
+
+	.social-icons a:hover {
+		color: #e68a00;
+	}
+
+	/* Estilos de Enlaces */
+	.footer a {
+		color: #4a4a4a; /* Color de enlace en modo claro */
+		text-decoration: none;
+		transition: color 0.3s;
+	}
+
+	.footer a:hover {
+		color: #ff9900; /* Color al pasar el ratón */
+	}
+
+	/* Estilos de Enlaces en Modo Oscuro */
+	@media (prefers-color-scheme: dark) {
+		.footer {
+			background-color: #1a1a1a;
+		}
+		.footer .has-text-grey-light {
+			color: #cccccc;
+		}
+		.footer a {
+			color: #dddddd; /* Color de enlace en modo oscuro */
+		}
+		.footer a:hover {
+			color: #ff9900; /* Color al pasar el ratón en modo oscuro */
+		}
+	}
+
+	/* Eliminar colores predeterminados de enlaces */
+	a {
+		color: inherit;
+	}
+</style>
