@@ -1,0 +1,129 @@
+---
+---
+<button
+    id="scrollUpBtn"
+    aria-label="Scroll to top"
+    title="Go to top"
+    class="button is-dark is-rounded is-fixed-bottom-right has-text-white m-6 is-hidden is-circle">
+    <span class="icon is-small">
+        <i class="fas fa-arrow-up"></i>
+    </span>
+</button>
+
+<script>
+    const scrollBtn = document.getElementById("scrollUpBtn");
+    
+    if (scrollBtn) {
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollBtn.classList.remove("is-hidden");
+            } else {
+                scrollBtn.classList.add("is-hidden");
+            }
+        };
+
+        scrollBtn.addEventListener("click", function() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        });
+    }
+</script>
+
+<style>
+    .is-fixed-bottom-right {
+        position: fixed !important;
+        bottom: 0;
+        right: 0;
+        z-index: 99;
+    }
+</style>
+
+<!-- TODO: Hacer la funcion del chat funcional con workers. Y quitar el is-hidden -->
+<button
+    id="chatBtn"
+    aria-label="Open chat"
+    title="Chat with us"
+    class="button is-dark is-rounded is-fixed-bottom-right has-text-white m-6 is-circle is-hidden"
+    style="bottom: 80px;">
+    <span class="icon is-small">
+        <i class="fas fa-comments"></i>
+    </span>
+</button>
+
+<div class="modal" id="chatbot">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box">
+            <div class="has-border-bottom">
+                <div class="level is-mobile">
+                    <div class="level-left">
+                        <h3 class="title is-6">Chat</h3>
+                    </div>
+                    <div class="level-right">
+                        <button class="delete" aria-label="close"></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content" style="height: 40vh; overflow-y: auto;">
+                <div class="message mb-3">
+                    <div class="message-body has-background-grey-light">
+                        ¡Hola! ¿En qué podemos ayudarte hoy?
+                    </div>
+                </div>
+                <div class="message is-right mb-3">
+                    <div class="message-body has-background-info-light has-text-right">
+                        Estoy interesado en sus servicios.
+                    </div>
+                </div>
+            </div>
+
+            <div class="has-border-top">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input type="text" class="input is-small" placeholder="Escribe un mensaje..." disabled>
+                    </div>
+                    <div class="control">
+                        <button class="button is-small is-info" disabled>
+                            <span class="icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatBtn = document.getElementById('chatBtn');
+        const chatbot = document.getElementById('chatbot');
+        const closeBtn = chatbot.querySelector('.delete');
+
+        chatBtn.addEventListener('click', () => {
+            chatbot.classList.add('is-active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            chatbot.classList.remove('is-active');
+        });
+    });
+
+    // If you clicked outside the modal, close it
+    document.addEventListener('click', (e) => {
+        const chatbot = document.getElementById('chatbot');
+        if (e.target === chatbot) {
+            chatbot.classList.remove('is-active');
+        }
+    });
+
+    // If you press the escape key, close the modal
+    document.addEventListener('keydown', (e) => {
+        const chatbot = document.getElementById('chatbot');
+        if (e.key === 'Escape') {
+            chatbot.classList.remove('is-active');
+        }
+    });
+</script>
