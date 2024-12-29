@@ -1,39 +1,42 @@
 ---
 ---
 <section id="about" class="section">
-    <div class="container p-6">
-        <div class="columns is-vcentered">
-            <div class="column">
+    <div class="container p-3 p-md-6 container-mobile-fluid">
+        <!-- Cambiar is-mobile por is-multiline para mejor comportamiento responsive -->
+        <div class="columns is-vcentered is-multiline">
+            <div class="column is-12-mobile is-7-tablet">
                 <h1 class="title is-2 has-text-weight-bold">Sobre Nosotros</h1>
                 
                 <div class="content">
-                    <div class="box p-5 animate-slide-in has-shadow" style="animation-delay: 0.8s;">
+                    <!-- Ajustar el padding en móvil -->
+                    <div class="box p-3 p-md-5 animate-slide-in has-shadow" style="animation-delay: 0.8s;">
                         <h3 class="title is-4 has-text-primary">Nuestra Misión</h3>
-                        <p class="subtitle is-5">
+                        <p class="subtitle is-5 is-size-6-mobile">
                             En Woof & Work Marketing, nos dedicamos a revolucionar la presencia digital de empresas mediante estrategias creativas y efectivas. Combinamos el marketing digital con un toque único y amigable, inspirado en la lealtad y entusiasmo que caracterizan a nuestros amigos caninos.
                         </p>
                     </div>
-                    <div class="box p-5 animate-slide-in has-shadow" style="animation-delay: 0.8s;">
+                    <div class="box p-3 p-md-5 animate-slide-in has-shadow" style="animation-delay: 0.8s;">
                         <h3 class="title is-4 has-text-primary">Nuestra Visión</h3>
-                        <p class="subtitle is-5">
+                        <p class="subtitle is-5 is-size-6-mobile">
                             Aspiramos a ser la agencia de marketing digital líder que transforme la manera en que las empresas conectan con sus audiencias. Queremos crear un espacio donde la creatividad, la innovación y la efectividad se combinen para generar resultados extraordinarios.
                         </p>
                     </div>
-                        <div class="box p-5 animate-slide-in has-shadow" style="animation-delay: 0.8s;">
-                            <h3 class="title is-4 has-text-primary">Nuestros Valores</h3>
-                            <ul class="is-size-5">
-                                <li class="mb-3">🐾 <strong>Lealtad</strong> - Como nuestros amigos peludos, somos fieles a nuestros clientes y sus objetivos</li>
-                                <li class="mb-3">🎨 <strong>Creatividad</strong> - Pensamos fuera de la caja para encontrar soluciones únicas</li>
-                                <li class="mb-3">💪 <strong>Compromiso</strong> - Nos dedicamos al 100% a cada proyecto</li>
-                                <li class="mb-3">🔄 <strong>Adaptabilidad</strong> - Evolucionamos constantemente con las tendencias digitales</li>
-                                <li class="mb-3">🤝 <strong>Transparencia</strong> - Comunicación clara y honesta en todo momento</li>
-                                <li class="mb-3">❤️ <strong>Pasión</strong> - Amamos lo que hacemos tanto como los perros aman sus juguetes</li>
-                            </ul>
-                        </div>
+                    <div class="box p-3 p-md-5 animate-slide-in has-shadow" style="animation-delay: 0.8s;">
+                        <h3 class="title is-4 has-text-primary">Nuestros Valores</h3>
+                        <ul class="is-size-5 is-size-6-mobile">
+                            <li class="mb-2 mb-md-3">🐾 <strong>Lealtad</strong> - Como nuestros amigos peludos, somos fieles a nuestros clientes y sus objetivos</li>
+                            <li class="mb-2 mb-md-3">🎨 <strong>Creatividad</strong> - Pensamos fuera de la caja para encontrar soluciones únicas</li>
+                            <li class="mb-2 mb-md-3">💪 <strong>Compromiso</strong> - Nos dedicamos al 100% a cada proyecto</li>
+                            <li class="mb-2 mb-md-3">🔄 <strong>Adaptabilidad</strong> - Evolucionamos constantemente con las tendencias digitales</li>
+                            <li class="mb-2 mb-md-3">🤝 <strong>Transparencia</strong> - Comunicación clara y honesta en todo momento</li>
+                            <li class="mb-2 mb-md-3">❤️ <strong>Pasión</strong> - Amamos lo que hacemos tanto como los perros aman sus juguetes</li>
+                        </ul>
                     </div>
                 </div>
+            </div>
             
-            <div class="column is-hidden-mobile animate-slide-in">
+            <!-- Mostrar imagen también en móvil pero más pequeña -->
+            <div class="column is-12-mobile is-5-tablet animate-slide-in">
                 <picture class="hover-effect">
                     <source
                         srcset="/images/social-media-metrics.avif"
@@ -46,10 +49,11 @@
                     <img 
                         src="/images/social-media-metrics.webp"
                         alt="Sobre nosotros"
-                        width="800"
-                        height="600"
+                        width="100%"
+                        height="auto"
                         loading="lazy"
                         decoding="async"
+                        style="max-width: 800px; margin: 0 auto; display: block;"
                     />
                 </picture>
             </div>
@@ -83,4 +87,19 @@
         transform: translateY(-10px);
     }
 
+    /* Ajustes responsive */
+    @media screen and (max-width: 768px) {
+        .title.is-2 {
+            font-size: 1.75rem;
+        }
+        
+        .title.is-4 {
+            font-size: 1.25rem;
+        }
+
+        .container-mobile-fluid {
+            width: 100%;
+            padding: 0 1rem;
+        }
+    }
 </style>
