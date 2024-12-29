@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/netlify": "^6.0.0",
-    "astro": "^5.0.5",
+    "@astrojs/netlify": "^6.0.1",
+    "astro": "^5.1.1",
     "dotenv": "^16.4.7",
     "resend": "^4.0.1",
     "typescript": "^5.7.2",
