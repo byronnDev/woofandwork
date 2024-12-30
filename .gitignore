@@ -13,3 +13,9 @@ dist/
 
 # System files
 .DS_Store
+
+# Netlify
+.netlify/
+
+# .Astro directories
+.astro/
