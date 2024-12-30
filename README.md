@@ -1,6 +1,6 @@
 # Proyecto Web Xabi
 
-![Proyecto Web Xabi](https://github.com/byronnDev/proyectoWebXabi/public/images/webPreview.webp)
+![Proyecto Web Xabi](https://github.com/byronnDev/proyectoWebXabi/blob/main/public/images/webPreview.webp)
 
 ## 🚀 Introducción
 
