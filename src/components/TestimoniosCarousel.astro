@@ -46,7 +46,7 @@ const testimonios = [
 ---
 
 <div class="container">
-    <div class="slider-mask">
+    <div class="slider-mask" id="testimonios-slider">
         <div class="slider-track">
             {testimonios.map(testimonio => (
                 <div class="slider-item">
@@ -62,40 +62,120 @@ const testimonios = [
     </div>
 </div>
 
+<script>
+    class TestimoniosCarousel {
+        private slider: HTMLElement | null;
+        private track: HTMLElement | null;
+        private observer: IntersectionObserver;
+
+        constructor() {
+            this.slider = document.getElementById('testimonios-slider');
+            this.track = this.slider?.querySelector('.slider-track') as HTMLElement;
+            this.observer = this.createObserver();
+            this.init();
+        }
+
+        private createObserver(): IntersectionObserver {
+            return new IntersectionObserver(
+                (entries) => this.handleIntersection(entries),
+                { threshold: 0.1 }
+            );
+        }
+
+        private handleIntersection(entries: IntersectionObserverEntry[]): void {
+            entries.forEach(entry => {
+                const animationState = entry.isIntersecting ? 'running' : 'paused';
+                this.setAnimationState(animationState);
+            });
+        }
+
+        private setAnimationState(state: 'running' | 'paused'): void {
+            this.track?.style.setProperty('animation-play-state', state);
+        }
+
+        private setupEventListeners(): void {
+            this.slider?.addEventListener('mouseenter', () => this.setAnimationState('paused'));
+            this.slider?.addEventListener('mouseleave', () => this.setAnimationState('running'));
+        }
+
+        private init(): void {
+            if (this.slider) {
+                this.observer.observe(this.slider);
+                this.setupEventListeners();
+            }
+        }
+    }
+
+    // Inicializar el carrusel
+    document.addEventListener('DOMContentLoaded', () => {
+        new TestimoniosCarousel();
+    });
+</script>
+
 <style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
     .slider-mask {
         position: relative;
         overflow: hidden;
         width: 100%;
         padding: 2rem 0;
     }
-    
-    .slider {
-        position: relative;
-        overflow: hidden;
-        padding: 2rem 0;
-    }
 
     .slider-track {
         display: flex;
-        animation: scroll 20s linear infinite;
-        position: relative;
+        animation: scroll 90s linear infinite;
+        width: fit-content;
+        animation-play-state: running;
+        will-change: transform;
+        gap: 2rem; /* Espacio entre cards */
     }
 
     .slider-item {
-        flex: 0 0 100%; /* Por defecto en móvil muestra 1 */
-        padding: 0 1rem;
+        min-width: 300px; /* Ancho mínimo fijo para las cards */
+        max-width: 400px; /* Ancho máximo para PC */
+        flex: 1;
+        padding: 0 0.5rem;
     }
 
-    @media (min-width: 640px) {
+    /* PC - 4 items */
+    @media (min-width: 1200px) {
         .slider-item {
-            flex: 0 0 50%; /* En tablets muestra 2 */
+            width: calc((100vw - 6rem) / 4);
+            max-width: 350px;
         }
     }
 
-    @media (min-width: 1024px) {
+    /* Tablet grande - 3 items */
+    @media (max-width: 1199px) and (min-width: 769px) {
         .slider-item {
-            flex: 0 0 33.333%; /* En PC muestra 3 */
+            width: calc((100vw - 4rem) / 3);
+            max-width: 320px;
+        }
+    }
+
+    /* Tablet - 2 items */
+    @media (max-width: 768px) and (min-width: 641px) {
+        .slider-item {
+            width: calc((100vw - 3rem) / 2);
+            max-width: 300px;
+        }
+    }
+
+    /* Móvil - 1 item */
+    @media (max-width: 640px) {
+        .slider-item {
+            width: calc(100vw - 3rem);
+            max-width: 100%;
+            min-width: 280px;
+        }
+        
+        .slider-track {
+            gap: 1rem;
         }
     }
 
