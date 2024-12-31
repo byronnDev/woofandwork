@@ -27,14 +27,17 @@ import Footer from "../components/Footer.astro";
 		<meta property="og:description" content="Especialistas en marketing digital para negocios del sector de mascotas y veterinarios." />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url.href}/>
-		<meta property="og:image" content={Astro.url.href + "/images/og-image.jpg"} />
+		<meta property="og:image" content={Astro.url.href + "images/og-image.jpg"} />
 		<meta property="og:locale" content="es_ES" />
 		<meta property="og:site_name" content="Woof & Work Marketing" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content="Woof & Work Marketing | Agencia de Marketing para Mascotas" />
 		<meta name="twitter:description" content="Especialistas en marketing digital para negocios del sector de mascotas y veterinarios." />
 		<meta name="twitter:image" content={Astro.url.href + "/images/twitter-image.jpg"} />
 		<meta name="twitter:site" content="@woofandwork" />
+		<meta name="twitter:creator" content="@MikelEcheve" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="alternate" hreflang="es" href={Astro.url.href} />
 		<script is:inline type="application/ld+json">
@@ -52,7 +55,9 @@ import Footer from "../components/Footer.astro";
 				"contactPoint": {
 					"@type": "ContactPoint",
 					"telephone": "+34-123-456-789",
-					"contactType": "Customer Service"
+					"contactType": "Customer Service",
+					"areaServed": "ES",
+					"availableLanguage": ["Spanish", "English"]
 				}
 			}
 		</script>
