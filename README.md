@@ -4,7 +4,7 @@
 
 ## 🚀 Introducción
 
-Bienvenido al **Proyecto Web Xabi**. Este proyecto es un sitio web de una empresa de marketing dirigida al sector animal, optimizado para SEO y rendimiento utilizando tecnologías modernas como Astro, React y TypeScript.
+Bienvenido a **Woof and Work Marketing**, una agencia de marketing especializada en el sector de mascotas. Este sitio web está desarrollado con tecnologías modernas como Astro, React y TypeScript, optimizado para SEO y rendimiento para ofrecer la mejor experiencia a amantes de las mascotas y negocios del sector.
 
 ## 📦 Estructura del Proyecto
 
