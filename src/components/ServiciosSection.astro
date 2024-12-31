@@ -1,31 +1,33 @@
 ---
+import { faBullhorn, faDesktop, faChartLine, faCamera, faComments } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const services = [
     {
-        icon: "bullhorn",
+        icon: faBullhorn,
         title: "Marketing Digital",
         description: "Estrategias digitales personalizadas para clínicas veterinarias y negocios del sector animal.",
         animation: "animation1"
     },
     {
-        icon: "desktop",
+        icon: faDesktop,
         title: "Diseño Web",
         description: "Páginas web profesionales para veterinarios y empresas del sector mascota.",
         animation: "animation2"
     },
     {
-        icon: "chart-line",
+        icon: faChartLine,
         title: "Consultoría",
         description: "Asesoramiento estratégico para el crecimiento de tu negocio en el sector animal.",
         animation: "animation3"
     },
     {
-        icon: "camera",
+        icon: faCamera,
         title: "Contenido Visual",
         description: "Creación de contenido visual profesional para redes sociales y web.",
         animation: "animation4"
     },
     {
-        icon: "comments",
+        icon: faComments,
         title: "Gestión de Redes",
         description: "Administración y optimización de tus redes sociales para mayor engagement.",
         animation: "animation5"
@@ -42,7 +44,7 @@ const services = [
                      data-service>
                     <div class="box has-text-centered">
                         <span class={`icon is-large has-text-warning ${service.animation}`}>
-                            <i class={`fa fa-${service.icon} fa-2x`}></i>
+                            <FontAwesomeIcon icon={service.icon} size="2x" />
                         </span>
                         <h3 class="title is-4 mt-4">{service.title}</h3>
                         <p class="subtitle is-6">{service.description}</p>

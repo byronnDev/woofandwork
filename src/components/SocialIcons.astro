@@ -1,5 +1,6 @@
-
 ---
+import { faFacebookF, faInstagram, faLinkedinIn, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 ---
 <div class="social-icons mt-4">
     <a href="https://www.facebook.com/ForoEuropeo" 
@@ -7,27 +8,35 @@
        rel="noopener noreferrer" 
        class="mx-2"
        aria-label="Síguenos en Facebook">
-        <i class="fab fa-facebook-f fa-lg" aria-hidden="true"></i>
+       <span class="icon px-16">
+            <FontAwesomeIcon icon={faFacebookF} />
+       </span>
     </a>
     <a href="https://www.x.com/x" 
        target="_blank" 
        rel="noopener noreferrer" 
        class="mx-2"
        aria-label="Síguenos en Twitter">
-        <i class="fab fa-x-twitter fa-lg" aria-hidden="true"></i>
+        <span class="icon px-16">
+            <FontAwesomeIcon icon={faXTwitter} />
+        </span>
     </a>
     <a href="https://www.instagram.com/foroeuropeo/" 
        target="_blank" 
        rel="noopener noreferrer" 
        class="mx-2"
        aria-label="Síguenos en Instagram">
-        <i class="fab fa-instagram fa-lg" aria-hidden="true"></i>
+        <span class="icon px-16">
+            <FontAwesomeIcon icon={faInstagram} />
+        </span>
     </a>
     <a href="https://es.linkedin.com/school/foroeuropeo/" 
        target="_blank" 
        rel="noopener noreferrer" 
        class="mx-2"
        aria-label="Síguenos en LinkedIn">
-        <i class="fab fa-linkedin-in fa-lg" aria-hidden="true"></i>
+        <span class="icon px-16">
+            <FontAwesomeIcon icon={faLinkedinIn} />
+        </span>
     </a>
 </div>

@@ -1,11 +1,13 @@
 ---
 // ReunionButton.astro
+import { faCalendarCheck } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 ---
 
 <div class="buttons">
     <a class="button is-primary" href="#contact">
-        <span class="icon">
-            <i class="fas fa-calendar-check"></i>
+        <span class="icon p-1">
+            <FontAwesomeIcon icon={faCalendarCheck} />
         </span>
         <strong>Programar Reunión</strong>
     </a>
