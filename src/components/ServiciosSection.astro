@@ -43,7 +43,7 @@ const services = [
                      style={index > 2 ? "display: none;" : ""} 
                      data-service>
                     <div class="box has-text-centered">
-                        <span class={`icon is-large has-text-warning ${service.animation}`}>
+                        <span class={`icon is-large has-text-white animate-when-visible ${service.animation}`} style="filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));">
                             <FontAwesomeIcon icon={service.icon} size="2x" />
                         </span>
                         <h3 class="title is-4 mt-4">{service.title}</h3>
