@@ -6,7 +6,10 @@ import ReunionButton from './ReunionButton.astro';
         <div class="container">
         <div class="navbar-brand">
             <a class="navbar-item is-flex is-align-items-center" href="/" style="gap: 0.5rem;">
-                <img src="/images/logo.webp" alt="logo de Woof & Work Marketing" width="auto" height="auto" />
+                <picture>
+                    <source type="image/avif" srcset="/images/logo.avif" width="32" height="32" style="object-fit: contain;" />
+                    <img src="/images/logo.webp" alt="logo de Woof & Work Marketing" width="32" height="32" loading="eager" decoding="sync" style="object-fit: contain;" />
+                </picture>
                 <strong>Woof & Work Marketing</strong>
             </a>
 
