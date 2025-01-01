@@ -37,23 +37,22 @@
             
             <!-- Mostrar imagen también en móvil pero más pequeña -->
             <div class="column is-12-mobile is-5-tablet animate-slide-in">
-                <picture class="hover-effect">
+                <picture>
                     <source
-                        srcset="/images/social-media-metrics.avif"
                         type="image/avif"
+                        sizes="(max-width: 768px) 400px, 800px"
                     />
                     <source
-                        srcset="/images/social-media-metrics.webp"
+                        srcset="images/social-media-metrics.webp"
                         type="image/webp"
                     />
-                    <img 
-                        src="/images/social-media-metrics.webp"
-                        alt="Sobre nosotros"
-                        width="100%"
-                        height="auto"
+                    <img
+                        src="images/social-media-metrics.jpg"
                         loading="lazy"
                         decoding="async"
-                        style="max-width: 800px; margin: 0 auto; display: block;"
+                        width="800"
+                        height="600"
+                        alt="Social media metrics"
                     />
                 </picture>
             </div>

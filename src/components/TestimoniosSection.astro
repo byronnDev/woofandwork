@@ -1,8 +1,9 @@
 ---
-import TestimoniosCarousel from './TestimoniosCarousel.astro';
+// En páginas que no sean críticas
+const { default:TestimoniosCarousel } = await import('../components/TestimoniosCarousel.astro');
 ---
 <section class="testimonios">
     <h2 class="title is-3 has-text-centered">Testimonios</h2>
     <!-- Comentarios de clientes -->
-    <TestimoniosCarousel />
+    <TestimoniosCarousel client:visible />
 </section>
