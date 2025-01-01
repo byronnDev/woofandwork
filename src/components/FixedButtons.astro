@@ -1,14 +1,10 @@
----
-import { faArrowUp, faComments, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
----
 <button
     id="scrollUpBtn"
     aria-label="Scroll to top"
     title="Go to top"
     class="button is-dark is-rounded is-fixed-bottom-right has-text-white m-6 is-hidden is-circle" style="padding: 1.5rem; width: 3.5rem; height: 3.5rem;">
     <span class="icon p-1">
-        <FontAwesomeIcon icon={faArrowUp} fixedWidth />
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </span>
 </button>
 
@@ -47,8 +43,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
     title="Chat with us"
     class="button is-dark is-rounded is-fixed-bottom-right has-text-white m-6 is-circle is-hidden"
     style="bottom: 80px;">
-    <span class="icon p-1">
-        <FontAwesomeIcon icon={faComments} fixedWidth />
+    <span class="icon">
+        <i class="fas fa-comments" aria-hidden="true"></i>
     </span>
 </button>
 
@@ -87,8 +83,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
                     </div>
                     <div class="control">
                         <button class="button is-small is-info" disabled>
-                            <span class="icon p-1">
-                                <FontAwesomeIcon icon={faPaperPlane} fixedWidth />
+                            <span class="icon">
+                                <i class="fas fa-paper-plane" aria-hidden="true"></i>
                             </span>
                         </button>
                     </div>
