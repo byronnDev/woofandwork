@@ -1,7 +1,109 @@
 ---
-import Header from "../components/Header.astro";
 import FixedButtons from "../components/FixedButtons.astro";
 import Footer from "../components/Footer.astro";
+
+
+interface Props {
+	title?: string;
+	meta?: Array<{
+		name?: string;
+		property?: string;
+		content?: string;
+		rel?: string;
+		href?: string;
+	}>;
+}
+
+const {
+	title = "Woof & Work Marketing | Agencia de Marketing para Mascotas",
+	meta = [
+		{
+			name: "description",
+			content: "Agencia de marketing digital especializada en negocios del sector de mascotas. Impulsa tu negocio veterinario o tienda de mascotas con estrategias personalizadas."
+		},
+		{
+			name: "keywords",
+			content: "marketing mascotas, marketing veterinario, marketing digital mascotas, marketing pet shops, publicidad veterinaria, SEO veterinario"
+		},
+		{
+			name: "robots",
+			content: "index, follow"
+		},
+		{
+			name: "author",
+			content: "Woof & Work Marketing"
+		},
+		{
+			name: "language",
+			content: "Spanish"
+		},
+		{
+			name: "revisit-after",
+			content: "7 days"
+		},
+		{
+			property: "og:title",
+			content: "Woof & Work Marketing | Agencia de Marketing para Mascotas"
+		},
+		{
+			property: "og:description",
+			content: "Especialistas en marketing digital para negocios del sector de mascotas y veterinarios."
+		},
+		{
+			property: "og:type",
+			content: "website"
+		},
+		{
+			property: "og:url",
+			content: Astro.url.href
+		},
+		{
+			property: "og:image",
+			content: Astro.url.href + "images/webPreview.webp"
+		},
+		{
+			property: "og:locale",
+			content: "es_ES"
+		},
+		{
+			property: "og:site_name",
+			content: "Woof & Work Marketing"
+		},
+		{
+			property: "og:image:width",
+			content: "1200"
+		},
+		{
+			property: "og:image:height",
+			content: "630"
+		},
+		{
+			name: "twitter:card",
+			content: "summary_large_image"
+		},
+		{
+			name: "twitter:title",
+			content: "Woof & Work Marketing | Agencia de Marketing para Mascotas"
+		},
+		{
+			name: "twitter:description",
+			content: "Especialistas en marketing digital para negocios del sector de mascotas y veterinarios."
+		},
+		{
+			name: "twitter:image",
+			content: Astro.url.href + "images/webPreview.webp"
+		},
+		{
+			name: "twitter:site",
+			content: "@woofandwork"
+		},
+		{
+			name: "twitter:creator",
+			content: "@MikelEcheve"
+		}
+	]
+} = Astro.props;
+
 ---
 
 <!doctype html>
@@ -17,30 +119,14 @@ import Footer from "../components/Footer.astro";
 		<noscript><link rel="stylesheet" href="/fontawesome/css/all.min.css"></noscript>
 		<link rel="preload" href="/bulma/bulma.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 		<noscript><link rel="stylesheet" href="/bulma/bulma.min.css"></noscript>
-		<title>Woof & Work Marketing | Agencia de Marketing para Mascotas</title>
-		<meta name="description" content="Agencia de marketing digital especializada en negocios del sector de mascotas. Impulsa tu negocio veterinario o tienda de mascotas con estrategias personalizadas." />
-		<meta name="keywords" content="marketing mascotas, marketing veterinario, marketing digital mascotas, marketing pet shops, publicidad veterinaria, SEO veterinario" />
-		<meta name="author" content="Woof & Work Marketing" />
-		<meta name="robots" content="index, follow" />
-		<meta name="language" content="Spanish" />
-		<meta name="revisit-after" content="7 days" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+			<title>{title}</title>
+		{meta.map((m) => (
+			m.name ? <meta name={m.name} content={m.content} /> :
+			m.property ? <meta property={m.property} content={m.content} /> :
+			null
+		))}
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<link rel="apple-touch-icon" href="/images/logo.avif" />
-		<meta property="og:title" content="Woof & Work Marketing | Agencia de Marketing para Mascotas" />
-		<meta property="og:description" content="Especialistas en marketing digital para negocios del sector de mascotas y veterinarios." />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={Astro.url.href}/>
-		<meta property="og:image" content={Astro.url.href + "images/webPreview.webp"} />
-		<meta property="og:locale" content="es_ES" />
-		<meta property="og:site_name" content="Woof & Work Marketing" />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Woof & Work Marketing | Agencia de Marketing para Mascotas" />
-		<meta name="twitter:description" content="Especialistas en marketing digital para negocios del sector de mascotas y veterinarios." />
-		<meta name="twitter:image" content={Astro.url.href + "images/webPreview.webp"} />
-		<meta name="twitter:site" content="@woofandwork" />
-		<meta name="twitter:creator" content="@MikelEcheve" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<link rel="alternate" hreflang="es" href={Astro.url.href} />
 		<script defer is:inline type="application/ld+json">
@@ -66,7 +152,6 @@ import Footer from "../components/Footer.astro";
 		</script>
 	</head>
 	<body>
-		<Header />
 		<slot />
 		<FixedButtons />
 		<Footer />
@@ -83,6 +168,9 @@ import Footer from "../components/Footer.astro";
 		height: 100%;
 		font-family: 'Inter Tight', sans-serif;
 		scroll-behavior: smooth;
+		@media (prefers-color-scheme: light) {
+			background-color: #f5f5f5;
+		}
 	}
 
 	#navBarMenu {
