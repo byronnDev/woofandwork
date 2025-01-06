@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+const meta = {
+    title: "404: Página no encontrada | Woof & Work Marketing",
+    meta: [
+        { name: "robots", content: "noindex,nofollow" },
+        { name: "description", content: "Lo sentimos, la página que buscas no existe en Woof & Work Marketing. Vuelve a nuestra página principal para encontrar contenido sobre marketing para negocios de animales." },
+        { property: "og:title", content: "404: Página no encontrada | Woof & Work Marketing" },
+        { property: "og:description", content: "Lo sentimos, la página que buscas no existe en Woof & Work Marketing." },
+        { property: "og:type", content: "website" },
+        { rel: "canonical", href: "https://marketinganimales.com/404" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "charset", content: "UTF-8" }
+    ]
+}
+---
+
+<Layout title={meta.title} meta={meta.meta}>
+    <main class="section hero is-fullheight" style="padding-top: 2rem;">
+        <div class="hero-body pt-0">
+            <div class="container">
+                <div class="columns is-vcentered is-multiline reverse-columns-mobile">
+                    <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+                        <img
+                            src="/images/404-error-with-a-cute-animal-animate.svg"
+                            alt="Ilustración de un gatito adorable perdido en la página 404"
+                            class="image"
+                            style="max-width: 512px; margin: 0 auto; width: 100%;"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                            fetchpriority="high"
+                            role="img"
+                            aria-labelledby="error-title"
+                        />
+                    </div>
+                    <div class="column is-half-desktop is-full-tablet is-full-mobile">
+                        <article class="content has-text-centered-mobile has-text-centered-tablet">
+                            <h1 class="title is-2 has-text-primary" aria-label="Error 404 - Página no encontrada" id="error-title">¡Ups! Página no encontrada</h1>
+                            <p class="subtitle is-4 mb-6" style="text-wrap: pretty;">
+                                Parece que nuestro gatito se ha perdido buscando esta página. ¿Quieres volver al inicio?
+                            </p>
+                            <a
+                                href="/"
+                                class="button is-primary is-rounded is-medium"
+                                aria-label="Volver a la página principal de Woof & Work Marketing"
+                                rel="noopener"
+                            >
+                                Volver al inicio
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    @media screen and (max-width: 768px) {
+        .reverse-columns-mobile {
+            flex-direction: column;
+            display: flex;
+        }
+    }
+</style>
