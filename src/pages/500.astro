@@ -1,0 +1,70 @@
+
+---
+import Layout from '../layouts/Layout.astro';
+const meta = {
+    title: "500: Error interno del servidor | Woof & Work Marketing",
+    meta: [
+        { name: "robots", content: "noindex,nofollow" },
+        { name: "description", content: "Lo sentimos, ha ocurrido un error interno en Woof & Work Marketing. Por favor, vuelve a intentarlo más tarde o regresa a nuestra página principal." },
+        { property: "og:title", content: "500: Error interno del servidor | Woof & Work Marketing" },
+        { property: "og:description", content: "Lo sentimos, ha ocurrido un error interno en Woof & Work Marketing." },
+        { property: "og:type", content: "website" },
+        { rel: "canonical", href: "https://marketinganimales.com/500" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "charset", content: "UTF-8" }
+    ]
+}
+---
+
+<Layout title={meta.title} meta={meta.meta}>
+    <main class="section hero is-fullheight" style="padding-top: 2rem; background-color: #fff9c461;">
+        <div class="hero-body pt-0">
+            <div class="container">
+                <div class="columns is-vcentered is-multiline reverse-columns-mobile">
+                    <div class="column is-half-desktop is-full-tablet is-full-mobile has-text-centered">
+                        <img
+                            src="/images/internal-server-error-500.svg"
+                            alt="Ilustración de un perrito adorable quitando un cable de conexión de un servidor"
+                            class="image"
+                            style="max-width: 512px; margin: 0 auto; width: 100%;"
+                            width="512"
+                            height="512"
+                            loading="lazy"
+                            decoding="async"
+                            fetchpriority="high"
+                            role="img"
+                            aria-labelledby="error-title"
+                        />
+                    </div>
+                    <div class="column is-half-desktop is-full-tablet is-full-mobile">
+                        <article class="content has-text-centered-mobile has-text-centered-tablet">
+                            <h1 class="title is-2 has-text-warning mb-4" aria-label="Error 500" id="error-title">
+                                ¡Ups! Error del servidor
+                            </h1>
+                            <p class="subtitle is-4 mb-5" style="line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
+                                Nuestro perrito informático está trabajando para arreglar este problemilla. ¡Como un buen chico! Mientras tanto, ¿por qué no vuelves a intentarlo en un ratito?
+                            </p>
+                            <a
+                                href="/"
+                                class="button is-warning is-rounded is-medium"
+                                aria-label="Volver a la página principal de Woof & Work Marketing"
+                                rel="noopener"
+                            >
+                                Volver al inicio
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    @media screen and (max-width: 768px) {
+        .reverse-columns-mobile {
+            flex-direction: column;
+            display: flex;
+        }
+    }
+</style>
