@@ -1,41 +1,69 @@
 ---
 import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
+
+const posts = await Astro.glob('../content/posts/*.md');
 ---
 
-<Layout title="Blog - En Desarrollo">
+<Layout title="Blog">
     <Header />
-    <main class="section has-text-centered">
-        <div class="container">
-            <h1 class="title is-2">
-                🚧 Página en Desarrollo 🚧
-            </h1>
-            
-            <div class="image is-128x128 mx-auto">
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    class="is-fullwidth has-text-warning-light animate-pulse" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                >
-                    <path 
-                        stroke-linecap="round" 
-                        stroke-linejoin="round" 
-                        stroke-width="1.5" 
-                        d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                    />
-                </svg>
-            </div>
-
-            <div class="content">
-                <p class="subtitle is-5">
-                    ¡Estamos trabajando en esta sección! Mientras tanto, puedes visitar otras páginas de nuestro sitio.
-                </p>
-                <p class="subtitle is-5">
-                    ¡Gracias por tu paciencia! 🙏
-                </p>
-            </div>
+    <section class="section">
+        <h1 class="title is-1 has-text-centered mb-6">Posts</h1>
+        
+        <div class="columns is-multiline is-centered px-3">
+            {posts.map((post) => (
+                <div class="column is-12-mobile is-10-tablet is-10-desktop">
+                    <article class="box post-box">
+                        <div class="columns is-vcentered is-multiline">
+                            <div class="column is-12-mobile is-5-tablet">
+                                {post.frontmatter.image && (
+                                    <figure class="image is-3by2">
+                                        <img src={post.frontmatter.image} alt={post.frontmatter.title} class="is-rounded" />
+                                    </figure>
+                                )}
+                            </div>
+                            <div class="column is-12-mobile is-7-tablet">
+                                <h2 class="title is-2-desktop is-3-tablet is-4-mobile mb-3 post-title">{post.frontmatter.title}</h2>
+                                <p class="subtitle is-6 post-date mb-4">{post.frontmatter.date}</p>
+                                <div class="content">
+                                    <p class="is-clamp-4 post-description">{post.frontmatter.description || post.rawContent().slice(0, 300) + '...'}</p>
+                                </div>
+                                <a href={post.url} class="button is-primary is-rounded is-medium-tablet is-normal-mobile">
+                                    <span>Leer más</span>
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            ))}
         </div>
-    </main>
+    </section>
 </Layout>
+
+<style>
+    .is-clamp-4 {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    @media screen and (max-width: 768px) {
+        .post-title {
+            text-align: center;
+        }
+
+        .post-date {
+            text-align: center;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            margin-top: 1rem;
+        }
+    }
+</style>
