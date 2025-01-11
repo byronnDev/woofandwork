@@ -1,4 +1,5 @@
 ---
+layout: ../../layouts/Post.astro
 title: "Mi Primer Post"
 publishDate: "2024-01-15"
 description: "Este es un post de ejemplo para mostrar el formato de los artículos del blog."

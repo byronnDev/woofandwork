@@ -1,94 +1,52 @@
 ---
-// Post.astro
+import Layout from './Layout.astro';
+
 interface Props {
     title: string;
-    pubDate: Date;
-    image?: {
-        url: string;
-        alt: string;
+    meta?: Array<{ name?: string; property?: string; content: string; }>;
+    frontmatter: {
+        title: string;
+        publishDate: string;
+        description: string;
+        author: string;
+        image?: {
+            url: string;
+            alt: string;
+        };
+        tags?: string[];
     };
 }
 
-const { title, pubDate, image } = Astro.props;
-const formattedDate = pubDate.toLocaleDateString('es-ES', {
+const { title, meta = [], frontmatter } = Astro.props;
+const publishDate = new Date(frontmatter.publishDate).toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
 });
 ---
 
-<article class="post">
-    <div class="container">
-        <header>
-            <h1>{title}</h1>
-            <time datetime={pubDate.toISOString()}>{formattedDate}</time>
-        </header>
-
-        {image && (
-            <img
-                src={image.url}
-                alt={image.alt}
-                class="featured-image"
-            />
-        )}
-
-        <div class="content">
-            <slot />
+<Layout title={frontmatter.title + " | Blog"} meta={meta}>
+    <article class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-10">
+                    <div class="content is-large">
+                        <slot />
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</article>
+    </article>
+</Layout>
 
 <style>
-    .post {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
+    .has-shadow {
+        box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+        border-radius: 6px;
     }
     
-    header {
-        margin-bottom: 2rem;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    time {
-        color: #666;
-        font-size: 0.9rem;
-    }
-
-    .featured-image {
-        width: 100%;
-        height:</header>
-        auto;
-        max-height: 400px;
-        object-fit: cover;
-        margin-bottom: 2rem;
-    }
-
-    .content {
-        line-height: 1.6;
-    }
-
-    .content :global(p) {
-        margin-bottom: 1.5rem;
-    }
-
-    .content :global(h2) {
-        font-size: 1.8rem;
-        margin: 2rem 0 1rem;
-    }
-
-    .content :global(img) {
-        max-width: 100%;
-        height: auto;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 65ch;
-        margin: 0 auto;
+    .content img {
+        border-radius: 6px;
+        margin: 2rem 0;
     }
 </style>

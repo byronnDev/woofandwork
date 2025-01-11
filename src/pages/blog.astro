@@ -1,8 +1,10 @@
 ---
+import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
 
 const posts = await Astro.glob('../content/posts/*.md');
+posts.sort((a, b) => new Date(b.frontmatter.publishDate).getTime() - new Date(a.frontmatter.publishDate).getTime());
 ---
 
 <Layout title="Blog">
@@ -11,36 +13,58 @@ const posts = await Astro.glob('../content/posts/*.md');
         <h1 class="title is-1 has-text-centered mb-6">Posts</h1>
         
         <div class="columns is-multiline is-centered px-3">
-            {posts.map((post) => (
-                <div class="column is-12-mobile is-10-tablet is-10-desktop">
-                    <article class="box post-box">
-                        <div class="columns is-vcentered is-multiline">
-                            <div class="column is-12-mobile is-5-tablet">
-                                {post.frontmatter.image && (
-                                    <figure class="image is-3by2">
-                                        <img src={post.frontmatter.image} alt={post.frontmatter.title} class="is-rounded" />
-                                    </figure>
-                                )}
-                            </div>
-                            <div class="column is-12-mobile is-7-tablet">
-                                <h2 class="title is-2-desktop is-3-tablet is-4-mobile mb-3 post-title">{post.frontmatter.title}</h2>
-                                <p class="subtitle is-6 post-date mb-4">{post.frontmatter.date}</p>
-                                <div class="content">
-                                    <p class="is-clamp-4 post-description">{post.frontmatter.description || post.rawContent().slice(0, 300) + '...'}</p>
+            {posts.map((post) => {
+                const slug = post.file.split('/').pop()?.replace('.md', '') ?? '';
+                return (
+                    <div class="column is-12-mobile is-10-tablet is-10-desktop">
+                        <article class="p-5 post-box">
+                            <div class="columns is-vcentered is-multiline">
+                                <div class="column is-12-mobile is-5-tablet">
+                                    {post.frontmatter.image && (
+                                        <figure class="image is-3by2">
+                                            <img
+                                                src={post.frontmatter.image.url}
+                                                alt={post.frontmatter.image.alt}
+                                                class="has-shadow"
+                                                style="border-radius: 6px;"
+                                            />
+                                        </figure>
+                                    )}
                                 </div>
-                                <a href={post.url} class="button is-primary is-rounded is-medium-tablet is-normal-mobile">
-                                    <span>Leer más</span>
-                                    <span class="icon">
-                                        <i class="fas fa-arrow-right"></i>
-                                    </span>
-                                </a>
+                                <div class="column is-12-mobile is-7-tablet">
+                                    <h2 class="title is-2-desktop is-3-tablet is-4-mobile mb-3 post-title">
+                                        {post.frontmatter.title}
+                                    </h2>
+                                    <p class="subtitle is-6 post-date mb-4">
+                                        {new Date(post.frontmatter.publishDate).toLocaleDateString('es-ES', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        })}
+                                    </p>
+                                    <div class="tags mb-4">
+                                        {post.frontmatter.tags?.map((tag: string) => (
+                                            <span class="tag is-primary is-light">{tag}</span>
+                                        ))}
+                                    </div>
+                                    <div class="content">
+                                        <p class="is-clamp-4 post-description">{post.frontmatter.description || post.rawContent().slice(0, 300) + '...'}</p>
+                                    </div>
+                                    <a href={`/posts/${slug}`} class="button is-primary is-rounded is-medium-tablet is-normal-mobile">
+                                        <span>Leer más</span>
+                                        <span class="icon">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-                </div>
-            ))}
+                        </article>
+                    </div>
+                );
+            })}
         </div>
     </section>
+    <Footer />
 </Layout>
 
 <style>

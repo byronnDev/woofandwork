@@ -1,0 +1,47 @@
+---
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import Post from '../../layouts/Post.astro';
+
+const { slug } = Astro.params;
+const posts = await Astro.glob<{
+    frontmatter: {
+        title: string;
+        publishDate: string;
+        description: string;
+        author: string;
+        image?: { url: string; alt: string; };
+        tags?: string[];
+    };
+    default: any;
+}>('../../content/posts/*.md');
+
+const post = posts.find(p => p.file.split('/').pop()?.replace('.md', '') === slug);
+
+if (!post) {
+    throw new Error(`Post no encontrado: ${slug}`);
+}
+
+const Content = post.default;
+
+const metaTags = [
+    { charset: "UTF-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
+    { name: "description", content: post.frontmatter.description },
+    { property: "og:description", content: post.frontmatter.description },
+    { property: "og:type", content: "article" }
+];
+---
+<html lang="es">
+    <head>
+        {metaTags.map(meta => (
+            meta.charset ? 
+                <meta charset={meta.charset} /> :
+                <meta {...meta} />
+        ))}
+    </head>
+<Header />
+<Post frontmatter={post.frontmatter}>
+    <Content />
+</Post>
+<Footer />
