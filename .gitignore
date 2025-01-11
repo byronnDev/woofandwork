@@ -19,3 +19,5 @@ dist/
 
 # .Astro directories
 .astro/
+.astro/data-store.json
+.astro/settings.json
