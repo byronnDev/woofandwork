@@ -65,7 +65,8 @@ CONFIG = {
         '.pdf', '.doc', '.docx', '.ppt', '.pptx', 
         '.xls', '.xlsx', '.html', '.txt', '.json', 
         '.xml', '.csv'
-    ]
+    ],
+    'DEV_URL': 'http://localhost:4321',  # URL del servidor de desarrollo
 }
 
 @dataclass
@@ -805,17 +806,18 @@ class PostUploaderGUI:
                 raise DeploymentError(f"Error en npm build: {build_result.stderr}")
             commands_status.append(True)
 
-            # Ejecutar npm run deploy
-            deploy_result = subprocess.run(
-                'npm run dev',
-                capture_output=True,
-                text=True,
+            # Iniciar npm run dev en un subproceso independiente
+            subprocess.Popen(
+                'start npm run dev',
                 shell=True,
                 cwd=CONFIG['REPO_DIR']
             )
-            if deploy_result.returncode != 0:
-                raise DeploymentError(f"Error en npm deploy: {deploy_result.stderr}")
-            commands_status.append(True)
+
+            # Esperar un momento para que el servidor inicie
+            time.sleep(3)
+
+            # Abrir el navegador
+            webbrowser.open(CONFIG['DEV_URL'])
 
             # Restaurar directorio original
             os.chdir(original_dir)
