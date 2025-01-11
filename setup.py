@@ -1,19 +1,19 @@
-import os
-import shutil
-import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
-import sys
-import logging
-from datetime import datetime
-from dataclasses import dataclass
-from typing import Optional, List, Dict
-from PIL import Image  # Añadimos la importación de Pillow
-import subprocess  # Añadido para ejecutar comandos
-from tkinter import ttk, scrolledtext
-import webbrowser
 import json
+import logging
+import os
 import re
+import shutil
+import subprocess  # Añadido para ejecutar comandos
+import sys
+import tkinter as tk
+import webbrowser
+from dataclasses import dataclass
+from datetime import datetime
+from tkinter import filedialog, messagebox, scrolledtext, ttk
+from typing import Dict, List, Optional
+
 from markitdown import MarkItDown
+from PIL import Image  # Añadimos la importación de Pillow
 
 # Configuración
 CONFIG = {
@@ -79,6 +79,17 @@ class PostData:
     image_alt: str
     tags: List[str]
     post_date: str
+
+    def validate(self) -> None:
+        """Validar que todos los campos requeridos estén presentes y sean válidos"""
+        if not self.title or self.title == "Título del post":
+            raise ValueError("El título no puede estar vacío o ser el valor por defecto")
+        if not self.author or self.author == "Nombre del autor":
+            raise ValueError("El autor no puede estar vacío o ser el valor por defecto")
+        if not self.image_path:
+            raise ValueError("Debe seleccionar una imagen")
+        if not self.tags:
+            raise ValueError("Debe especificar al menos un tag")
 
 class PostCreator:
     """Clase responsable de la creación del post"""
@@ -159,33 +170,50 @@ tags: [{', '.join(f'"{tag}"' for tag in post.tags)}]
     def create_post(self, post: PostData) -> str:
         """Crear nuevo post y retornar la ruta del archivo creado"""
         try:
+            # Validar datos del post
+            post.validate()
+            
             # Procesar la imagen primero
             image_filename = self._copy_image(post.image_path)
             
-            # Sanitizar el título para el nombre del archivo
-            safe_title = self._sanitize_filename(post.title)
-            date = datetime.now().strftime("%Y-%m-%d")
-            post_filename = f"{date}-{safe_title}.md"
+            # Crear el archivo del post
+            post_path = self._create_post_file(post, image_filename)
             
-            # Asegurarse de que el nombre de archivo sea único
-            base_path = os.path.join(CONFIG['POSTS_DIR'], post_filename)
-            final_path = base_path
-            counter = 1
-            while os.path.exists(final_path):
-                name, ext = os.path.splitext(base_path)
-                final_path = f"{name}_{counter}{ext}"
-                counter += 1
-            
-            # Generar y guardar el contenido
-            content = self._generate_markdown(post, image_filename)
-            with open(final_path, 'w', encoding='utf-8') as f:
-                f.write(content)
-            
-            return final_path
+            return post_path
             
         except Exception as e:
             logging.error(f"Error al crear post: {e}")
-            raise
+            raise CreatePostError(f"Error al crear post: {str(e)}")
+
+    def _create_post_file(self, post: PostData, image_filename: str) -> str:
+        """Crear el archivo del post y retornar su ruta"""
+        safe_title = self._sanitize_filename(post.title)
+        date = datetime.now().strftime("%Y-%m-%d")
+        post_filename = f"{date}-{safe_title}.md"
+        
+        final_path = self._get_unique_filepath(
+            os.path.join(CONFIG['POSTS_DIR'], post_filename)
+        )
+        
+        content = self._generate_markdown(post, image_filename)
+        self._write_post_file(final_path, content)
+        
+        return final_path
+
+    def _get_unique_filepath(self, base_path: str) -> str:
+        """Obtener una ruta de archivo única"""
+        final_path = base_path
+        counter = 1
+        while os.path.exists(final_path):
+            name, ext = os.path.splitext(base_path)
+            final_path = f"{name}_{counter}{ext}"
+            counter += 1
+        return final_path
+
+    def _write_post_file(self, path: str, content: str) -> None:
+        """Escribir el contenido del post en un archivo"""
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(content)
 
 class PostManager:
     """Clase para gestionar operaciones con posts existentes"""
@@ -626,12 +654,7 @@ class PostUploaderGUI:
             )
 
             # Validación adicional de los datos
-            if not post_data.title or post_data.title == "Título del post":
-                raise ValueError("El título no puede estar vacío o ser el valor por defecto")
-            if not post_data.author or post_data.author == "Nombre del autor":
-                raise ValueError("El autor no puede estar vacío o ser el valor por defecto")
-            if not post_data.image_path:
-                raise ValueError("Debe seleccionar una imagen")
+            post_data.validate()
 
             return post_data
 
@@ -647,77 +670,204 @@ class PostUploaderGUI:
     def _handle_post_creation(self) -> None:
         """Manejar el proceso de creación del post"""
         try:
-            self.progress.start()
-            if self.upload_button:  # Verificamos si upload_button está inicializado
-                self.upload_button.config(state='disabled')
-            if self.deploy_button:  # Verificamos si deploy_button está inicializado
-                self.deploy_button.config(state='disabled')
-
+            self._start_processing()
+            
             post_data = self._get_post_data()
             if not post_data:
-                return  # Ya se mostró el mensaje de error en _get_post_data
+                return
 
-            post_path = self.post_creator.create_post(post_data)
-            self.current_post_path = post_path
-            logging.info(f"Post creado exitosamente: {post_path}")
-            messagebox.showinfo("Éxito", "Post creado exitosamente")
+            self.current_post_path = self.post_creator.create_post(post_data)
             
-            # Habilitar botón de despliegue
-            if self.deploy_button:  # Verificamos si deploy_button está inicializado
-                self.deploy_button.config(state='normal')
+            self._show_success_message("Post creado exitosamente")
+            self._enable_deploy_button()
 
         except Exception as e:
-            logging.error(f"Error al crear el post: {e}")
-            messagebox.showerror("Error", f"Error al crear el post:\n{str(e)}")
+            self._handle_error("Error al crear el post", e)
         finally:
-            self.progress.stop()
-            if self.upload_button:  # Verificamos si upload_button está inicializado
-                self.upload_button.config(state='normal')
-
-    def _deploy_to_production(self) -> bool:
-        """Ejecutar comandos de despliegue"""
-        try:
-            os.chdir(CONFIG['REPO_DIR'])
-            for command in CONFIG['DEPLOY_COMMANDS']:
-                result = subprocess.run(
-                    command,
-                    capture_output=True,
-                    text=True,
-                    check=True
-                )
-                logging.info(f"Comando ejecutado: {' '.join(command)}")
-                logging.debug(f"Salida: {result.stdout}")
-            return True
-        except subprocess.CalledProcessError as e:
-            logging.error(f"Error en el despliegue: {e.stderr}")
-            return False
-        except Exception as e:
-            logging.error(f"Error inesperado en el despliegue: {e}")
-            return False
+            self._end_processing()
 
     def _handle_deployment(self) -> None:
         """Manejar el proceso de despliegue"""
         try:
-            self.progress.start()
-            self.deploy_button.config(state='disabled')
+            self._start_deployment()
             
-            if messagebox.askyesno("Confirmar", "¿Estás seguro de que quieres desplegar a producción?"):
-                if self._deploy_to_production():
-                    messagebox.showinfo("Éxito", "Despliegue completado exitosamente")
-                else:
-                    messagebox.showerror("Error", "Error durante el despliegue. Revisa los logs para más detalles.")
+            if not self._confirm_deployment():
+                return
+                
+            if self._deploy_to_production():
+                self._show_success_message("Despliegue completado exitosamente")
+            else:
+                self._show_error_message("Error durante el despliegue")
+                
+        except Exception as e:
+            self._handle_error("Error en el despliegue", e)
         finally:
-            self.progress.stop()
+            self._end_deployment()
+
+    def _start_processing(self) -> None:
+        """Iniciar procesamiento y deshabilitar botones"""
+        self.progress.start()
+        if self.upload_button:
+            self.upload_button.config(state='disabled')
+        if self.deploy_button:
+            self.deploy_button.config(state='disabled')
+
+    def _end_processing(self) -> None:
+        """Finalizar procesamiento y restaurar botones"""
+        self.progress.stop()
+        if self.upload_button:
+            self.upload_button.config(state='normal')
+        # Habilitar el botón de publicar si hay un post creado
+        if self.deploy_button and self.current_post_path:
             self.deploy_button.config(state='normal')
+
+    def _deploy_to_production(self) -> bool:
+        """Ejecutar comandos de despliegue"""
+        try:
+            # Cambiar al directorio del repositorio
+            original_dir = os.getcwd()
+            os.chdir(CONFIG['REPO_DIR'])
+
+            # Lista para almacenar el estado de cada comando
+            commands_status = []
+            
+            # Git status para verificar cambios
+            status_result = subprocess.run(
+                ['git', 'status', '--porcelain'],
+                capture_output=True,
+                text=True
+            )
+            
+            if status_result.stdout.strip():
+                # Hay cambios, proceder con add y commit
+                add_result = subprocess.run(
+                    ['git', 'add', '.'],
+                    capture_output=True,
+                    text=True
+                )
+                if add_result.returncode != 0:
+                    raise DeploymentError(f"Error en git add: {add_result.stderr}")
+                
+                commit_result = subprocess.run(
+                    ['git', 'commit', '-m', 'Nuevo post añadido'],
+                    capture_output=True,
+                    text=True
+                )
+                if commit_result.returncode != 0:
+                    raise DeploymentError(f"Error en git commit: {commit_result.stderr}")
+                
+                push_result = subprocess.run(
+                    ['git', 'push', 'origin', 'main'],
+                    capture_output=True,
+                    text=True
+                )
+                if push_result.returncode != 0:
+                    raise DeploymentError(f"Error en git push: {push_result.stderr}")
+                
+                commands_status.extend([True, True, True])
+            else:
+                # No hay cambios para commit
+                logging.info("No hay cambios para commit")
+                commands_status.extend([True, True, True])
+
+            # Ejecutar npm run build
+            build_result = subprocess.run(
+                'npm run build',
+                capture_output=True,
+                text=True,
+                shell=True,
+                cwd=CONFIG['REPO_DIR']
+            )
+            if build_result.returncode != 0:
+                raise DeploymentError(f"Error en npm build: {build_result.stderr}")
+            commands_status.append(True)
+
+            # Ejecutar npm run deploy
+            deploy_result = subprocess.run(
+                'npm run deploy',
+                capture_output=True,
+                text=True,
+                shell=True,
+                cwd=CONFIG['REPO_DIR']
+            )
+            if deploy_result.returncode != 0:
+                raise DeploymentError(f"Error en npm deploy: {deploy_result.stderr}")
+            commands_status.append(True)
+
+            # Restaurar directorio original
+            os.chdir(original_dir)
+            
+            # Todo el proceso fue exitoso si todos los comandos lo fueron
+            return all(commands_status)
+
+        except DeploymentError as e:
+            logging.error(f"Error en el despliegue: {str(e)}")
+            messagebox.showerror("Error de Despliegue", str(e))
+            return False
+        except Exception as e:
+            logging.error(f"Error inesperado en el despliegue: {e}")
+            messagebox.showerror("Error", f"Error inesperado durante el despliegue:\n{str(e)}")
+            return False
+        finally:
+            # Asegurarse de volver al directorio original
+            if 'original_dir' in locals():
+                os.chdir(original_dir)
+
+    def _show_error_message(self, message: str) -> None:
+        """Mostrar mensaje de error"""
+        messagebox.showerror("Error", message)
+        logging.error(message)
+
+    def _handle_error(self, message: str, exception: Exception) -> None:
+        """Manejar errores y mostrar mensajes"""
+        logging.error(f"{message}: {exception}")
+        messagebox.showerror("Error", f"{message}:\n{str(exception)}")
+
+    def _show_success_message(self, message: str) -> None:
+        """Mostrar mensaje de éxito"""
+        messagebox.showinfo("Éxito", message)
+
+    def _enable_deploy_button(self) -> None:
+        """Habilitar botón de despliegue"""
+        if self.deploy_button:
+            self.deploy_button.config(state='normal')
+
+    def _start_deployment(self) -> None:
+        """Iniciar despliegue y deshabilitar botones"""
+        self.progress.start()
+        if self.deploy_button:
+            self.deploy_button.config(state='disabled')
+
+    def _end_deployment(self) -> None:
+        """Finalizar despliegue y restaurar botones"""
+        self.progress.stop()
+        if self.deploy_button:
+            self.deploy_button.config(state='normal')
+
+    def _confirm_deployment(self) -> bool:
+        """Confirmar despliegue"""
+        return messagebox.askyesno("Confirmar", "¿Estás seguro de que quieres desplegar a producción?")
 
     def _show_delete_dialog(self) -> None:
         """Mostrar diálogo para eliminar posts"""
         dialog = tk.Toplevel(self.root)
         dialog.title("Eliminar Post")
-        dialog.geometry("500x400")
+        dialog.geometry("500x500")  # Aumentado el alto de la ventana
         dialog.configure(bg=CONFIG['COLORS']['background'])
+        
+        # Hacer el diálogo modal y centrarlo
+        dialog.transient(self.root)
+        dialog.grab_set()
+        
+        # Centrar la ventana
+        dialog.update_idletasks()
+        width = dialog.winfo_width()
+        height = dialog.winfo_height()
+        x = (dialog.winfo_screenwidth() // 2) - (width // 2)
+        y = (dialog.winfo_screenheight() // 2) - (height // 2)
+        dialog.geometry(f'+{x}+{y}')
 
-        # Frame principal
+        # Frame principal con padding
         frame = ttk.Frame(dialog, style='Dark.TFrame')
         frame.pack(fill='both', expand=True, padx=10, pady=10)
 
@@ -743,30 +893,62 @@ class PostUploaderGUI:
                 return
             
             post = posts[selection[0]]
-            if messagebox.askyesno("Confirmar", CONFIG['MESSAGES']['delete_confirm']):
+            
+            # Liberar el control modal y esperar respuesta
+            dialog.grab_release()
+            dialog.withdraw()  # Ocultar diálogo temporalmente
+            
+            confirm = messagebox.askyesno(
+                "Confirmar",
+                CONFIG['MESSAGES']['delete_confirm'],
+                parent=dialog
+            )
+            
+            if confirm:
                 if self.post_manager.delete_post(post):
-                    messagebox.showinfo("Éxito", CONFIG['MESSAGES']['delete_success'])
+                    messagebox.showinfo(
+                        "Éxito",
+                        CONFIG['MESSAGES']['delete_success'],
+                        parent=dialog
+                    )
                     dialog.destroy()
                 else:
-                    messagebox.showerror("Error", CONFIG['MESSAGES']['delete_error'])
+                    dialog.deiconify()  # Mostrar diálogo nuevamente
+                    messagebox.showerror(
+                        "Error",
+                        CONFIG['MESSAGES']['delete_error'],
+                        parent=dialog
+                    )
+            else:
+                dialog.deiconify()  # Mostrar diálogo si no se confirma
+                dialog.grab_set()  # Recuperar el control modal
 
-        # Botones
+        # Frame para botones con padding
         button_frame = ttk.Frame(frame, style='Dark.TFrame')
-        button_frame.pack(fill='x', pady=5)
+        button_frame.pack(fill='x', pady=10)  # Aumentado el padding vertical
 
+        # Botones con más espacio
         ttk.Button(
             button_frame,
             text="Eliminar",
             command=delete_selected,
-            style='Dark.TButton'
+            style='Dark.TButton',
+            width=15  # Ancho fijo para los botones
         ).pack(side='left', padx=5)
 
         ttk.Button(
             button_frame,
             text="Cancelar",
             command=dialog.destroy,
-            style='Dark.TButton'
+            style='Dark.TButton',
+            width=15  # Ancho fijo para los botones
         ).pack(side='right', padx=5)
+
+        # Hacer que la ventana no sea redimensionable
+        dialog.resizable(False, False)
+        
+        # Esperar hasta que se cierre el diálogo
+        self.root.wait_window(dialog)
 
     def _import_file(self) -> None:
         """Importar archivo y convertirlo a markdown"""
@@ -818,11 +1000,20 @@ class PostUploaderGUI:
             messagebox.showerror("Error Fatal", f"Error en la aplicación: {e}")
             sys.exit(1)
 
+# Nuevas clases de excepciones personalizadas
+class CreatePostError(Exception):
+    """Excepción para errores en la creación de posts"""
+    pass
+
+class DeploymentError(Exception):
+    """Excepción para errores en el despliegue"""
+    pass
+
 def check_dependencies():
     """Verificar que todas las dependencias estén instaladas"""
     try:
-        import PIL
         import markitdown
+        import PIL
         return True
     except ImportError as e:
         print(f"Error: Faltan dependencias. Por favor, ejecute setup.py primero: {e}")
