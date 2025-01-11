@@ -762,11 +762,15 @@ class PostUploaderGUI:
                 if push_result.returncode != 0:
                     raise DeploymentError(f"Error en git push: {push_result.stderr}")
 
-            # Mostrar cuenta atrás
+            # Mostrar cuenta atrás y actualizar la interfaz
             for i in range(CONFIG['COUNTDOWN_SECONDS'], 0, -1):
                 self._show_countdown(i)
+                self.root.update()  # Actualizar la interfaz
                 time.sleep(1)
                 
+            # Restaurar título original
+            self.root.title("Editor de Posts")
+            
             # Abrir el blog en el navegador
             webbrowser.open(CONFIG['BLOG_URL'])
             
@@ -782,10 +786,13 @@ class PostUploaderGUI:
                 os.chdir(original_dir)
 
     def _show_countdown(self, seconds: int) -> None:
-        """Mostrar cuenta atrás en la barra de progreso"""
+        """Mostrar cuenta atrás en la barra de progreso y título"""
         if hasattr(self, 'progress'):
             self.progress.stop()
-            self.root.title(f"Abriendo blog en {seconds} segundos...")
+            # Actualizar título con cuenta atrás
+            self.root.title(f"⏱️ Abriendo blog en {seconds} segundos...")
+            # Actualizar barra de progreso
+            self.progress["value"] = ((CONFIG['COUNTDOWN_SECONDS'] - seconds) / CONFIG['COUNTDOWN_SECONDS']) * 100
 
     def _show_error_message(self, message: str) -> None:
         """Mostrar mensaje de error"""
