@@ -1,5 +1,6 @@
 ---
 title: "Mi Primer Post"
+postDate: "2024-01-15"
 description: "Este es un post de ejemplo para mostrar el formato de los artículos del blog."
 author: "Xabi"
 image:

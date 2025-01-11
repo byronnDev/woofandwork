@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 interface Props {
     frontmatter: {
         title: string;
+        postDate: string;
         description: string;
         author: string;
         image?: {
@@ -34,25 +35,34 @@ const metaTags = [
     <article class="section">
         <div class="container">
             <div class="columns is-centered">
-                <div class="column is-10">
-                    <header class="mb-6">
-                        <h1 class="title is-1">{frontmatter.title}</h1>
-                        {frontmatter.tags && (
-                            <div class="tags mt-2">
-                                {frontmatter.tags.map(tag => (
-                                    <span class="tag is-primary is-light">{tag}</span>
-                                ))}
-                            </div>
-                        )}
+                <div class="column is-8">
+                    <header class="post-header">
+                        <h1 class="title is-1 has-text-centered">{frontmatter.title}</h1>
+                        <div class="post-meta has-text-centered">
+                            <time datetime={frontmatter.postDate}>
+                                {new Date(frontmatter.postDate).toLocaleDateString('es-ES', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric'
+                                })}
+                            </time>
+                            {frontmatter.tags && (
+                                <div class="tags is-centered mt-4">
+                                    {frontmatter.tags.map(tag => (
+                                        <span class="tag">{tag}</span>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </header>
 
                     {frontmatter.image && (
-                        <figure class="image mb-6">
-                            <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="has-shadow" />
+                        <figure class="image featured-image">
+                            <img src={frontmatter.image.url} alt={frontmatter.image.alt} />
                         </figure>
                     )}
 
-                    <div class="content is-large">
+                    <div class="content">
                         <slot />
                     </div>
                 </div>
@@ -63,6 +73,59 @@ const metaTags = [
 </div>
 
 <style>
+    /* Light mode (default) */
+    .blog-post {
+        --text-color: #2c3e50;
+        --bg-color: #ffffff;
+        --tag-bg: #f5f5f5;
+        --tag-color: #4a4a4a;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+        .blog-post {
+            --text-color: #ecf0f1;
+            --bg-color: #1a1a1a;
+            --tag-bg: #2c3e50;
+            --tag-color: #ecf0f1;
+        }
+    }
+
+    .blog-post {
+        color: var(--text-color);
+        background-color: var(--bg-color);
+    }
+
+    .post-header {
+        margin-bottom: 2rem;  /* Reduced from 4rem to create better balance */
+    }
+
+    .post-meta {
+        color: #666;
+        font-size: 1.1rem;
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;  /* Added spacing below meta info */
+    }
+
+    .featured-image {
+        margin: 3rem 0 4rem;  /* Increased margins around image */
+        border-radius: 12px;  /* Slightly larger radius */
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);  /* Enhanced shadow */
+    }
+
+    .featured-image img {
+        width: 100%;
+        height: auto;
+        display: block;  /* Removes any unwanted space below image */
+        object-fit: cover;  /* Ensures proper image scaling */
+    }
+
+    .content {
+        margin-top: 2rem;  /* Added space before content */
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
     .has-shadow {
         box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1);
         border-radius: 6px;
