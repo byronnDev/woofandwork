@@ -5,8 +5,6 @@ interface Props {
     title: string;
     meta?: Array<{ name?: string; property?: string; content: string; }>;
     frontmatter: {
-        title: string;
-        publishDate: string;
         description: string;
         author: string;
         image?: {
@@ -18,11 +16,6 @@ interface Props {
 }
 
 const { title, meta = [], frontmatter } = Astro.props;
-const publishDate = new Date(frontmatter.publishDate).toLocaleDateString('es-ES', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-});
 ---
 
 <Layout title={frontmatter.title + " | Blog"} meta={meta}>
@@ -38,15 +31,3 @@ const publishDate = new Date(frontmatter.publishDate).toLocaleDateString('es-ES'
         </div>
     </article>
 </Layout>
-
-<style>
-    .has-shadow {
-        box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
-        border-radius: 6px;
-    }
-    
-    .content img {
-        border-radius: 6px;
-        margin: 2rem 0;
-    }
-</style>

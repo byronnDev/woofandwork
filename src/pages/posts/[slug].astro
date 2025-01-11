@@ -7,7 +7,6 @@ const { slug } = Astro.params;
 const posts = await Astro.glob<{
     frontmatter: {
         title: string;
-        publishDate: string;
         description: string;
         author: string;
         image?: { url: string; alt: string; };
@@ -35,7 +34,7 @@ const metaTags = [
 <html lang="es">
     <head>
         {metaTags.map(meta => (
-            meta.charset ? 
+            meta.charset ?
                 <meta charset={meta.charset} /> :
                 <meta {...meta} />
         ))}
