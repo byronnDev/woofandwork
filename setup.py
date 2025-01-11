@@ -68,6 +68,8 @@ CONFIG = {
         '.xml', '.csv'
     ],
     'DEV_URL': 'http://localhost:4321',  # URL del servidor de desarrollo
+    'BLOG_URL': 'https://www.marketinganimales.com/blog',  # Añadir URL del blog
+    'COUNTDOWN_SECONDS': 10,  # Tiempo de espera en segundos
 }
 
 @dataclass
@@ -727,16 +729,6 @@ class PostUploaderGUI:
             original_dir = os.getcwd()
             os.chdir(CONFIG['REPO_DIR'])
 
-            # Verificar que estamos en el directorio correcto y existe package.json
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            if not os.path.exists(os.path.join(script_dir, 'package.json')):
-                raise DeploymentError(
-                    "No se encuentra package.json. Asegúrate de estar en el directorio correcto del proyecto."
-                    f"\nDirectorio actual: {script_dir}"
-                )
-            # Lista para almacenar el estado de cada comando
-            commands_status = []
-            
             # Git status para verificar cambios
             status_result = subprocess.run(
                 ['git', 'status', '--porcelain'],
@@ -769,67 +761,17 @@ class PostUploaderGUI:
                 )
                 if push_result.returncode != 0:
                     raise DeploymentError(f"Error en git push: {push_result.stderr}")
+
+            # Mostrar cuenta atrás
+            for i in range(CONFIG['COUNTDOWN_SECONDS'], 0, -1):
+                self._show_countdown(i)
+                time.sleep(1)
                 
-                commands_status.extend([True, True, True])
-            else:
-                logging.info("No hay cambios para commit")
-                commands_status.extend([True, True, True])
-
-            # Verificar que npm está instalado
-            npm_version = subprocess.run(
-                ['npm', '--version'],
-                capture_output=True,
-                text=True
-            )
-            if npm_version.returncode != 0:
-                raise DeploymentError("npm no está instalado o no está accesible")
-
-            # Ejecutar npm install primero
-            install_result = subprocess.run(
-                'npm install',
-                capture_output=True,
-                text=True,
-                shell=True,
-                cwd=CONFIG['REPO_DIR']
-            )
-            if install_result.returncode != 0:
-                raise DeploymentError(f"Error en npm install: {install_result.stderr}")
-
-            # Ejecutar npm run build
-            build_result = subprocess.run(
-                'npm run build',
-                capture_output=True,
-                text=True,
-                shell=True,
-                cwd=CONFIG['REPO_DIR']
-            )
-            if build_result.returncode != 0:
-                raise DeploymentError(f"Error en npm build: {build_result.stderr}")
-            commands_status.append(True)
-
-            # Iniciar npm run dev en un subproceso independiente
-            subprocess.Popen(
-                'start npm run dev',
-                shell=True,
-                cwd=CONFIG['REPO_DIR']
-            )
-
-            # Esperar un momento para que el servidor inicie
-            time.sleep(3)
-
-            # Abrir el navegador
-            webbrowser.open(CONFIG['DEV_URL'])
-
-            # Restaurar directorio original
-            os.chdir(original_dir)
+            # Abrir el blog en el navegador
+            webbrowser.open(CONFIG['BLOG_URL'])
             
-            # Todo el proceso fue exitoso si todos los comandos lo fueron
-            return all(commands_status)
+            return True
 
-        except DeploymentError as e:
-            logging.error(f"Error en el despliegue: {str(e)}")
-            messagebox.showerror("Error de Despliegue", str(e))
-            return False
         except Exception as e:
             logging.error(f"Error inesperado en el despliegue: {e}")
             messagebox.showerror("Error", f"Error inesperado durante el despliegue:\n{str(e)}")
@@ -838,6 +780,12 @@ class PostUploaderGUI:
             # Asegurarse de volver al directorio original
             if 'original_dir' in locals():
                 os.chdir(original_dir)
+
+    def _show_countdown(self, seconds: int) -> None:
+        """Mostrar cuenta atrás en la barra de progreso"""
+        if hasattr(self, 'progress'):
+            self.progress.stop()
+            self.root.title(f"Abriendo blog en {seconds} segundos...")
 
     def _show_error_message(self, message: str) -> None:
         """Mostrar mensaje de error"""
