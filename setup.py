@@ -23,13 +23,13 @@ CONFIG = {
     'ICON_PATH': 'icono.ico',
     'LOG_FILE': 'upload_log.log',
     'ALLOWED_EXTENSIONS': ['.jpg', '.jpeg', '.png', '.webp'],
-    'REPO_DIR': os.path.dirname(os.path.dirname(os.path.abspath(__file__))),  # Directorio del repositorio
+    'REPO_DIR': os.path.dirname(os.path.abspath(__file__)),  # Directorio local dentro del repo
     'DEPLOY_COMMANDS': [
         ['git', 'add', '.'],
         ['git', 'commit', '-m', 'Nuevo post añadido'],
         ['git', 'push', 'origin', 'main'],
         ['npm', 'run', 'build'],
-        ['npm', 'run', 'deploy']
+        ['npm', 'run', 'dev']
     ],
     'COLORS': {
         'background': '#1e1e1e',
@@ -402,7 +402,7 @@ class PostUploaderGUI:
             text="↑ Publicar",
             command=self._handle_deployment,
             style='Dark.TButton',
-            state='disabled',
+            state='normal',  # Cambiado de 'disabled' a 'normal'
             width=15
         )
         self.deploy_button.pack(side='left', padx=5)
@@ -717,9 +717,6 @@ class PostUploaderGUI:
         self.progress.stop()
         if self.upload_button:
             self.upload_button.config(state='normal')
-        # Habilitar el botón de publicar si hay un post creado
-        if self.deploy_button and self.current_post_path:
-            self.deploy_button.config(state='normal')
 
     def _deploy_to_production(self) -> bool:
         """Ejecutar comandos de despliegue"""
@@ -728,6 +725,13 @@ class PostUploaderGUI:
             original_dir = os.getcwd()
             os.chdir(CONFIG['REPO_DIR'])
 
+            # Verificar que estamos en el directorio correcto y existe package.json
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            if not os.path.exists(os.path.join(script_dir, 'package.json')):
+                raise DeploymentError(
+                    "No se encuentra package.json. Asegúrate de estar en el directorio correcto del proyecto."
+                    f"\nDirectorio actual: {script_dir}"
+                )
             # Lista para almacenar el estado de cada comando
             commands_status = []
             
@@ -766,9 +770,28 @@ class PostUploaderGUI:
                 
                 commands_status.extend([True, True, True])
             else:
-                # No hay cambios para commit
                 logging.info("No hay cambios para commit")
                 commands_status.extend([True, True, True])
+
+            # Verificar que npm está instalado
+            npm_version = subprocess.run(
+                ['npm', '--version'],
+                capture_output=True,
+                text=True
+            )
+            if npm_version.returncode != 0:
+                raise DeploymentError("npm no está instalado o no está accesible")
+
+            # Ejecutar npm install primero
+            install_result = subprocess.run(
+                'npm install',
+                capture_output=True,
+                text=True,
+                shell=True,
+                cwd=CONFIG['REPO_DIR']
+            )
+            if install_result.returncode != 0:
+                raise DeploymentError(f"Error en npm install: {install_result.stderr}")
 
             # Ejecutar npm run build
             build_result = subprocess.run(
@@ -784,7 +807,7 @@ class PostUploaderGUI:
 
             # Ejecutar npm run deploy
             deploy_result = subprocess.run(
-                'npm run deploy',
+                'npm run dev',
                 capture_output=True,
                 text=True,
                 shell=True,
