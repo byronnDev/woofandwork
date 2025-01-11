@@ -23,3 +23,11 @@ dist/
 .astro/settings.json
 
 upload_log.log
+
+# Python virtual environment
+venv/
+__pycache__/
+*.pyc
+*.log
+
+venv/*
