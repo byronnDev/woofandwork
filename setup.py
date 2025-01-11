@@ -5,6 +5,7 @@ import re
 import shutil
 import subprocess  # Añadido para ejecutar comandos
 import sys
+import time
 import tkinter as tk
 import webbrowser
 from dataclasses import dataclass
