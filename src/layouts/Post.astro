@@ -1,10 +1,11 @@
 ---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 import Layout from './Layout.astro';
 
 interface Props {
-    title: string;
-    meta?: Array<{ name?: string; property?: string; content: string; }>;
     frontmatter: {
+        title: string;
         description: string;
         author: string;
         image?: {
@@ -15,19 +16,72 @@ interface Props {
     };
 }
 
-const { title, meta = [], frontmatter } = Astro.props;
+const { frontmatter } = Astro.props;
+
+const metaTags = [
+    { name: "description", content: frontmatter.description },
+    { property: "og:title", content: frontmatter.title },
+    { property: "og:description", content: frontmatter.description },
+    { property: "og:type", content: "article" },
+    frontmatter.image && {
+        property: "og:image",
+        content: frontmatter.image.url
+    }
+].filter(Boolean);
 ---
 
-<Layout title={frontmatter.title + " | Blog"} meta={meta}>
-    <article class="section">
-        <div class="container">
-            <div class="columns is-centered">
-                <div class="column is-10">
-                    <div class="content is-large">
-                        <slot />
+<Layout title={frontmatter.title + " | Blog"} meta={metaTags}>
+    <div class="blog-post">
+        <Header />
+        <article class="section">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-10">
+                        <header class="mb-6">
+                            <h1 class="title is-1">{frontmatter.title}</h1>
+                            {frontmatter.tags && (
+                                <div class="tags mt-2">
+                                    {frontmatter.tags.map(tag => (
+                                        <span class="tag is-primary is-light">{tag}</span>
+                                    ))}
+                                </div>
+                            )}
+                        </header>
+
+                        {frontmatter.image && (
+                            <figure class="image mb-6">
+                                <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="has-shadow" />
+                            </figure>
+                        )}
+
+                        <div class="content is-large">
+                            <slot />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </article>
+        </article>
+        <Footer />
+    </div>
 </Layout>
+
+<style>
+    .has-shadow {
+        box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1);
+        border-radius: 6px;
+    }
+
+    .blog-post :global(h1),
+    .blog-post :global(h2),
+    .blog-post :global(h3),
+    .blog-post :global(p),
+    .blog-post :global(li) {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .blog-post :global(pre) {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+</style>

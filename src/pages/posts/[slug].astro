@@ -1,6 +1,5 @@
 ---
-import Footer from '../../components/Footer.astro';
-import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';
 import Post from '../../layouts/Post.astro';
 
 const { slug } = Astro.params;
@@ -9,7 +8,10 @@ const posts = await Astro.glob<{
         title: string;
         description: string;
         author: string;
-        image?: { url: string; alt: string; };
+        image?: {
+            url: string;
+            alt: string;
+        };
         tags?: string[];
     };
     default: any;
@@ -23,24 +25,21 @@ if (!post) {
 
 const Content = post.default;
 
+const pageTitle = `${post.frontmatter.title} | Blog`;
 const metaTags = [
-    { charset: "UTF-8" },
-    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
     { name: "description", content: post.frontmatter.description },
+    { property: "og:title", content: post.frontmatter.title },
     { property: "og:description", content: post.frontmatter.description },
-    { property: "og:type", content: "article" }
-];
+    { property: "og:type", content: "article" },
+    post.frontmatter.image && {
+        property: "og:image",
+        content: post.frontmatter.image.url
+    }
+].filter(Boolean);
 ---
-<html lang="es">
-    <head>
-        {metaTags.map(meta => (
-            meta.charset ?
-                <meta charset={meta.charset} /> :
-                <meta {...meta} />
-        ))}
-    </head>
-<Header />
-<Post frontmatter={post.frontmatter}>
-    <Content />
-</Post>
-<Footer />
+
+<Layout title={pageTitle} meta={metaTags}>
+    <Post frontmatter={post.frontmatter}>
+        <Content />
+    </Post>
+</Layout>

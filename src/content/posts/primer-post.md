@@ -8,12 +8,6 @@ image:
 tags: ["ejemplo", "blog", "markdown", "guía"]
 ---
 
-# Mi Primer Post
-
-¡Bienvenidos a mi blog! Este es un post de ejemplo que muestra cómo estructurar el contenido y las diferentes posibilidades que ofrece Markdown.
-
-![Imagen por defecto del blog](/images/blog/default.webp)
-
 ## Introducción al Markdown
 
 Markdown es un lenguaje de marcado ligero que te permite escribir usando texto plano fácil de leer y escribir, y luego convertirlo a HTML estructuralmente válido.
