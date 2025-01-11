@@ -33,21 +33,21 @@ CONFIG = {
         ['npm', 'run', 'dev']
     ],
     'COLORS': {
-        'background': '#1e1e1e',
-        'surface': '#2d2d2d',
-        'input_bg': '#3d3d3d',        # Color más oscuro para inputs
-        'input_fg': '#e0e0e0',        # Texto más suave para inputs
-        'primary': '#bb86fc',
-        'secondary': '#03dac6',
-        'text': '#ffffff',
-        'text_secondary': '#b3b3b3',
-        'error': '#cf6679',
-        'success': '#03dac6',
-        'warning': '#ffb74d',
-        'selection_bg': '#404040',    # Color de selección
-        'hover': '#4d4d4d',           # Color para hover
-        'button_disabled': '#666666',  # Nuevo color para botones deshabilitados
-        'label_bg': '#2d2d2d'         # Color específico para fondos de labels
+        'background': '#1e1e1e',        # Fondo principal oscuro
+        'surface': '#252526',           # Superficies ligeramente más claras
+        'input_bg': '#3c3c3c',         # Fondo de inputs más claro para mejor visibilidad
+        'input_fg': '#ffffff',         # Texto de inputs en blanco
+        'primary': '#0078d4',          # Azul de Windows para botones primarios
+        'secondary': '#2ea043',        # Verde para acciones secundarias
+        'text': '#ffffff',             # Texto principal en blanco
+        'text_secondary': '#cccccc',    # Texto secundario en gris claro
+        'error': '#f85149',            # Rojo para errores
+        'success': '#2ea043',          # Verde para éxito
+        'warning': '#d29922',          # Amarillo para advertencias
+        'selection_bg': '#264f78',     # Azul oscuro para selección
+        'hover': '#2b2b2b',            # Color hover ligeramente más claro
+        'button_disabled': '#404040',   # Gris oscuro para botones deshabilitados
+        'label_bg': '#252526'          # Fondo de etiquetas igual que surface
     },
     'FONTS': {
         'main': ('Segoe UI', 10),
