@@ -21,7 +21,7 @@ CONFIG = {
     'POSTS_DIR': "src/content/posts",
     'IMAGES_DIR': "public/images/blog",
     'WINDOW_SIZE': "900x800",  # Ventana más grande
-    'ICON_PATH': 'icono.ico',
+    'ICON_PATH': '/public/logo.webp',
     'LOG_FILE': 'upload_log.log',
     'ALLOWED_EXTENSIONS': ['.jpg', '.jpeg', '.png', '.webp'],
     'REPO_DIR': os.path.dirname(os.path.abspath(__file__)),  # Directorio local dentro del repo
@@ -33,21 +33,21 @@ CONFIG = {
         ['npm', 'run', 'dev']
     ],
     'COLORS': {
-        'background': '#1e1e1e',        # Fondo principal oscuro
-        'surface': '#252526',           # Superficies ligeramente más claras
-        'input_bg': '#3c3c3c',         # Fondo de inputs más claro para mejor visibilidad
-        'input_fg': '#ffffff',         # Texto de inputs en blanco
+        'background': '#ffffff',        # Fondo principal blanco
+        'surface': '#f5f5f5',          # Superficies en gris muy claro
+        'input_bg': '#ffffff',         # Fondo de inputs blanco
+        'input_fg': '#000000',         # Texto de inputs negro
         'primary': '#0078d4',          # Azul de Windows para botones primarios
         'secondary': '#2ea043',        # Verde para acciones secundarias
-        'text': '#ffffff',             # Texto principal en blanco
-        'text_secondary': '#cccccc',    # Texto secundario en gris claro
-        'error': '#f85149',            # Rojo para errores
+        'text': '#000000',             # Texto principal negro
+        'text_secondary': '#666666',    # Texto secundario en gris
+        'error': '#d32f2f',            # Rojo para errores
         'success': '#2ea043',          # Verde para éxito
-        'warning': '#d29922',          # Amarillo para advertencias
-        'selection_bg': '#264f78',     # Azul oscuro para selección
-        'hover': '#2b2b2b',            # Color hover ligeramente más claro
-        'button_disabled': '#404040',   # Gris oscuro para botones deshabilitados
-        'label_bg': '#252526'          # Fondo de etiquetas igual que surface
+        'warning': '#ed6c02',          # Naranja para advertencias
+        'selection_bg': '#cce4ff',     # Azul claro para selección
+        'hover': '#e8e8e8',            # Gris muy claro para hover
+        'button_disabled': '#cccccc',   # Gris claro para botones deshabilitados
+        'label_bg': '#f5f5f5'          # Fondo de etiquetas igual que surface
     },
     'FONTS': {
         'main': ('Segoe UI', 10),
@@ -63,8 +63,8 @@ CONFIG = {
         'import_success': "Archivo importado exitosamente"
     },
     'ALLOWED_IMPORT_EXTENSIONS': [
-        '.pdf', '.doc', '.docx', '.ppt', '.pptx', 
-        '.xls', '.xlsx', '.html', '.txt', '.json', 
+        '.pdf', '.doc', '.docx', '.ppt', '.pptx',
+        '.xls', '.xlsx', '.html', '.txt', '.json',
         '.xml', '.csv'
     ],
     'DEV_URL': 'http://localhost:4321',  # URL del servidor de desarrollo
