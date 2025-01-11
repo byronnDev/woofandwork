@@ -1,7 +1,6 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import Layout from './Layout.astro';
 
 interface Props {
     frontmatter: {
@@ -30,40 +29,38 @@ const metaTags = [
 ].filter(Boolean);
 ---
 
-<Layout title={frontmatter.title + " | Blog"} meta={metaTags}>
-    <div class="blog-post">
-        <Header />
-        <article class="section">
-            <div class="container">
-                <div class="columns is-centered">
-                    <div class="column is-10">
-                        <header class="mb-6">
-                            <h1 class="title is-1">{frontmatter.title}</h1>
-                            {frontmatter.tags && (
-                                <div class="tags mt-2">
-                                    {frontmatter.tags.map(tag => (
-                                        <span class="tag is-primary is-light">{tag}</span>
-                                    ))}
-                                </div>
-                            )}
-                        </header>
-
-                        {frontmatter.image && (
-                            <figure class="image mb-6">
-                                <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="has-shadow" />
-                            </figure>
+<div class="blog-post">
+    <Header />
+    <article class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-10">
+                    <header class="mb-6">
+                        <h1 class="title is-1">{frontmatter.title}</h1>
+                        {frontmatter.tags && (
+                            <div class="tags mt-2">
+                                {frontmatter.tags.map(tag => (
+                                    <span class="tag is-primary is-light">{tag}</span>
+                                ))}
+                            </div>
                         )}
+                    </header>
 
-                        <div class="content is-large">
-                            <slot />
-                        </div>
+                    {frontmatter.image && (
+                        <figure class="image mb-6">
+                            <img src={frontmatter.image.url} alt={frontmatter.image.alt} class="has-shadow" />
+                        </figure>
+                    )}
+
+                    <div class="content is-large">
+                        <slot />
                     </div>
                 </div>
             </div>
-        </article>
-        <Footer />
-    </div>
-</Layout>
+        </div>
+    </article>
+    <Footer />
+</div>
 
 <style>
     .has-shadow {

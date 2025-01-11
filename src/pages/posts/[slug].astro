@@ -3,43 +3,48 @@ import Layout from '../../layouts/Layout.astro';
 import Post from '../../layouts/Post.astro';
 
 const { slug } = Astro.params;
-const posts = await Astro.glob<{
-    frontmatter: {
-        title: string;
-        description: string;
-        author: string;
-        image?: {
-            url: string;
-            alt: string;
-        };
-        tags?: string[];
-    };
-    default: any;
-}>('../../content/posts/*.md');
+const posts = await Astro.glob('../../content/posts/*.md');
 
-const post = posts.find(p => p.file.split('/').pop()?.replace('.md', '') === slug);
+const post = posts.find(p => {
+    const fileName = (p.file ?? '').split('/').pop()?.replace('.md', '');
+    return fileName === slug;
+});
 
 if (!post) {
     throw new Error(`Post no encontrado: ${slug}`);
 }
 
-const Content = post.default;
+const { frontmatter, default: Content } = post;
 
-const pageTitle = `${post.frontmatter.title} | Blog`;
+interface PostFrontmatter {
+    title: string;
+    description: string;
+    author: string;
+    image?: { url: string; alt: string; };
+    tags?: string[];
+}
+
+// Asegurar que frontmatter existe
+if (!frontmatter || !frontmatter.title || !frontmatter.description || !frontmatter.author) {
+    throw new Error(`Frontmatter incompleto para el post: ${slug}`);
+}
+
+const typedFrontmatter = frontmatter as PostFrontmatter;
+
+const pageTitle = `${frontmatter.title} | Blog`;
 const metaTags = [
-    { name: "description", content: post.frontmatter.description },
-    { property: "og:title", content: post.frontmatter.title },
-    { property: "og:description", content: post.frontmatter.description },
+    { name: "description", content: frontmatter.description },
+    { property: "og:title", content: frontmatter.title },
+    { property: "og:description", content: frontmatter.description },
     { property: "og:type", content: "article" },
-    post.frontmatter.image && {
+    frontmatter.image && {
         property: "og:image",
-        content: post.frontmatter.image.url
+        content: frontmatter.image.url
     }
-].filter(Boolean);
+];
 ---
-
 <Layout title={pageTitle} meta={metaTags}>
-    <Post frontmatter={post.frontmatter}>
+    <Post frontmatter={typedFrontmatter}>
         <Content />
     </Post>
 </Layout>
