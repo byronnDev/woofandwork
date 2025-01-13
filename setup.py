@@ -55,6 +55,7 @@ CONFIG = {
         'title': ('Segoe UI', 12, 'bold')
     },
     'HELP_URL': 'https://www.markdownguide.org/basic-syntax/',
+    'MARKDOWN_VISUALIZER_URL': 'https://proyectosjs.mikeldev.com/proyectos/markdown-visualizer',
     'MESSAGES': {
         'delete_confirm': "¿Estás seguro de que quieres eliminar este post y su imagen asociada?",
         'delete_success': "Post eliminado exitosamente",
@@ -368,6 +369,7 @@ class PostUploaderGUI:
         help_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Ayuda", menu=help_menu)
         help_menu.add_command(label="Guía Markdown", command=lambda: webbrowser.open(CONFIG['HELP_URL']))
+        help_menu.add_command(label="Visualizar Markdown", command=lambda: webbrowser.open(CONFIG['MARKDOWN_VISUALIZER_URL']))
         help_menu.add_command(label="Acerca de", command=self._show_about)
 
     def _setup_ui(self) -> None:
