@@ -115,10 +115,8 @@ const {
 		<link rel="icon" type="image/avif" href="/images/logo.avif" />
 		<link rel="icon" type="image/webp" href="/images/logo.webp" />
 		<meta name="generator" content={Astro.generator} />
-		<link rel="preload" href="/fontawesome/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="/fontawesome/css/all.min.css"></noscript>
-		<link rel="preload" href="/bulma/bulma.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-		<noscript><link rel="stylesheet" href="/bulma/bulma.min.css"></noscript>
+		<link rel="stylesheet" href="/fontawesome/css/all.min.css">
+		<link rel="stylesheet" href="/bulma/bulma.min.css">
 			<title>{title}</title>
 		{meta.map((m) => (
 			m.name ? <meta name={m.name} content={m.content} /> :
